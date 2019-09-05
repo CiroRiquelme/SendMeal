@@ -10,16 +10,21 @@ public class Usuario {
     private String clave;
     private Boolean notificarMail;
     private Double credito;
+    private CuentaBancaria cuentaBancaria;
+    private TarjetaCredito tarjetaCredito;
+    private TipoCuenta tipoCuenta;
 
-    public Usuario(Integer id, String nombre, String mail, String clave, Boolean notificarMail, Double credito) {
+    public Usuario(Integer id, String nombre, String mail, String clave, Boolean notificarMail, Double credito, CuentaBancaria cuentaBancaria, TarjetaCredito tarjetaCredito, TipoCuenta tipoCuenta) {
         this.id = id;
         this.nombre = nombre;
         this.mail = mail;
         this.clave = clave;
         this.notificarMail = notificarMail;
         this.credito = credito;
+        this.cuentaBancaria = cuentaBancaria;
+        this.tarjetaCredito = tarjetaCredito;
+        this.tipoCuenta = tipoCuenta;
     }
-
 
     public Integer getId() {
         return id;
@@ -69,6 +74,30 @@ public class Usuario {
         this.credito = credito;
     }
 
+    public CuentaBancaria getCuentaBancaria() {
+        return cuentaBancaria;
+    }
+
+    public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
+        this.cuentaBancaria = cuentaBancaria;
+    }
+
+    public TarjetaCredito getTarjetaCredito() {
+        return tarjetaCredito;
+    }
+
+    public void setTarjetaCredito(TarjetaCredito tarjetaCredito) {
+        this.tarjetaCredito = tarjetaCredito;
+    }
+
+    public TipoCuenta getTipoCuenta() {
+        return tipoCuenta;
+    }
+
+    public void setTipoCuenta(TipoCuenta tipoCuenta) {
+        this.tipoCuenta = tipoCuenta;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,12 +106,17 @@ public class Usuario {
         return Objects.equals(id, usuario.id) &&
                 Objects.equals(nombre, usuario.nombre) &&
                 Objects.equals(mail, usuario.mail) &&
-                Objects.equals(clave, usuario.clave);
+                Objects.equals(clave, usuario.clave) &&
+                Objects.equals(notificarMail, usuario.notificarMail) &&
+                Objects.equals(credito, usuario.credito) &&
+                Objects.equals(cuentaBancaria, usuario.cuentaBancaria) &&
+                Objects.equals(tarjetaCredito, usuario.tarjetaCredito) &&
+                tipoCuenta == usuario.tipoCuenta;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, mail, clave);
+        return Objects.hash(id, nombre, mail, clave, notificarMail, credito, cuentaBancaria, tarjetaCredito, tipoCuenta);
     }
 
     @Override
@@ -94,6 +128,10 @@ public class Usuario {
                 ", clave='" + clave + '\'' +
                 ", notificarMail=" + notificarMail +
                 ", credito=" + credito +
+                ", cuentaBancaria=" + cuentaBancaria +
+                ", tarjetaCredito=" + tarjetaCredito +
+                ", tipoCuenta=" + tipoCuenta +
                 '}';
     }
 }
+

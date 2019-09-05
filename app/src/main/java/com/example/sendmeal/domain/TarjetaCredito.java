@@ -8,6 +8,7 @@ public class TarjetaCredito {
     private Integer digitoVerificacion;
     private String vencimiento;
 
+
     public TarjetaCredito(Integer id, String numero, Integer digitoVerificacion, String vencimiento) {
         this.id = id;
         this.numero = numero;
@@ -73,3 +74,5 @@ public class TarjetaCredito {
                 '}';
     }
 }
+
+

@@ -131,7 +131,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/tvTipoCuenta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/registro_tipo_cuenta" />

@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity   {
     // Claves Validas
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
-                    //"(?=.*[0-9])" +         //at least 1 digit
+                    "(?=.*[0-9])" +         //at least 1 digit
                     //"(?=.*[a-z])" +         //at least 1 lower case letter
                     //"(?=.*[A-Z])" +         //at least 1 upper case letter
                     "(?=.*[a-zA-Z])" +      //any letter
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity   {
     RadioButton optBase;
     RadioButton optPremium;
     RadioButton optFull;
+    TextView tvTipoCuenta;
 
     SeekBar regCredito;
     TextView creditoInicial;
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity   {
         optBase = findViewById(R.id.optBase);
         optPremium = findViewById(R.id.optPremium);
         optFull = findViewById(R.id.optFull);
+        tvTipoCuenta = findViewById(R.id.tvTipoCuenta);
 
         regCredito = findViewById(R.id.regCredito);
         creditoInicial = findViewById(R.id.creditoInicial);
@@ -228,21 +230,37 @@ public class MainActivity extends AppCompatActivity   {
         @Override
         public void onClick(View view) {
 
-            if(validarMail() && validarClave() && validarDatosTarjeta() && validarTipoCuenta() && validarDatosVendedor()){
+            if(validarNombre() & validarClave() & validarMail() & validarDatosTarjeta() & validarTipoCuenta() & validarDatosVendedor()){
                 Toast.makeText(getApplicationContext(),"Creando Usuario ...",Toast.LENGTH_LONG).show();
+            }else{
+
             }
 
         }
     };
 
+    private  boolean validarNombre(){
+        String nombre = regNombre.getText().toString();
+        regNombre.setError(null);
+        if(nombre.isEmpty()){
+            regNombre.setError("Debo ingresar un nombre");
+            return false;
+        }
+        return true;
+    }
+
     private  boolean validarMail(){
         Context context = getApplicationContext();
         String mail = regMail.getText().toString().trim();
+        regMail.setError(null);
+
         if (mail.isEmpty()) {
-            Toast.makeText(context, "Debe ingresar un email.", Toast.LENGTH_SHORT).show();
+            regMail.setError("Debe ingresar un mail");
+           // Toast.makeText(context, "Debe ingresar un email.", Toast.LENGTH_SHORT).show();
             return false;
         } else if ((!Patterns.EMAIL_ADDRESS.matcher(mail).matches())){
-            Toast.makeText(context, "Debo ingresar un email válido.", Toast.LENGTH_SHORT).show();
+            regMail.setError("Debe ingresar un email válido.");
+            //Toast.makeText(context, "Debo ingresar un email válido.", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -252,62 +270,37 @@ public class MainActivity extends AppCompatActivity   {
          Context context = getApplicationContext();
         String clave = regClave.getText().toString().trim();
         String clave2 = regClave2.getText().toString().trim();
+
+        regClave.setError(null);
+        regClave2.setError(null);
+
         if(clave.isEmpty()){
-            Toast.makeText(context, "Debe establecer un clave.", Toast.LENGTH_SHORT).show();
+            regClave.setError("Debe establecer un clave.");
+           // Toast.makeText(context, "Debe establecer un clave.", Toast.LENGTH_SHORT).show();
             return false;
         }else if (!PASSWORD_PATTERN.matcher(clave).matches()){
-            Toast.makeText(context, "Ingrese una clave valida.", Toast.LENGTH_SHORT).show();
+            regClave.setError("Ingrese una clave valida.");
+            //Toast.makeText(context, "Ingrese una clave valida.", Toast.LENGTH_SHORT).show();
             return false;
         }else if (!clave.equals(clave2)){
-            Toast.makeText(context, "Las claves deben concidir.", Toast.LENGTH_SHORT).show();
+            regClave2.setError("Las claves deben concidir.");
+            //Toast.makeText(context, "Las claves deben concidir.", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
     private boolean validarDatosTarjeta(){
-        Context context = getApplicationContext();
-
-        String nroTajeta = regNro.getText().toString().trim();
-        String ccvTarjeta =regDigito.getText().toString();
-        String vencimientoTarjeta = regVto.getText().toString().trim();
-
-
-        if(nroTajeta.isEmpty()||ccvTarjeta.isEmpty()||vencimientoTarjeta.isEmpty()){
-            Toast.makeText(context, "Debe completar los datos de la tarjeta.", Toast.LENGTH_SHORT).show();
-            return false;
-        }else if(!validarVencimiento()){
+        if(!validarNumeroTarjeta() | !validarNumeroCCV() | !validarVencimiento()) {
             return false;
         }
-        return true;
-    }
 
-    private boolean validarTipoCuenta(){
-        Context context = getApplicationContext();
-        int optTipoCuenta = regTipoCuenta.getCheckedRadioButtonId();
-        if (optTipoCuenta == -1) {
-            Toast.makeText(context, "Debe elegir un tipo de cuenta.", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
-
-    private boolean validarDatosVendedor(){
-        Context context = getApplicationContext();
-
-        String ctaAlias = regCtaAlias.getText().toString().trim();
-        String ctaCbu = regCtaCbu.getText().toString().trim();
-        if (optEsVendedor.isChecked()) {
-            if (ctaAlias.isEmpty() || ctaCbu.isEmpty()) {
-                Toast.makeText(context, "Debe completar los datos de la cuenta bancaria.", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        }
         return true;
     }
 
     private boolean validarVencimiento(){
         Context context = getApplicationContext();
+        regVto.setError(null);
 
         Calendar fecha = Calendar.getInstance();
         int añoActual = fecha.get(Calendar.YEAR);
@@ -317,18 +310,90 @@ public class MainActivity extends AppCompatActivity   {
         mesActual=(mesActual+3)%12;
 
         if(vtoAño<añoActual){
+
+            Toast.makeText(context, "Fecha de vencimiento no valida.", Toast.LENGTH_SHORT).show();
+            regVto.setError("Fecha de vencimiento no valida.");
             return false;
         }else{
             if(añoActual==vtoAño) {
                 if (vtoMes < mesActual) {
+
                     Toast.makeText(context, "Fecha de vencimiento no valida.", Toast.LENGTH_SHORT).show();
+                    regVto.setError("Fecha de vencimiento no valida.");
                     return false;
                 }
             }
         }
+        return true;
+    }
+
+    private  boolean validarNumeroTarjeta(){
+        regNro.setError(null);
+        String nroTajeta = regNro.getText().toString().trim();
+        if(nroTajeta.isEmpty()){
+            regNro.setError("Debo ingresar un numero de tarjeta");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validarNumeroCCV(){
+        regDigito.setError(null);
+        String ccvTarjeta =regDigito.getText().toString();
+        if(ccvTarjeta.isEmpty()){
+            regDigito.setError("Debo ingresar un ccv.");
+            return false;
+        }
 
         return true;
     }
+
+    private boolean validarTipoCuenta(){
+        Context context = getApplicationContext();
+        int optTipoCuenta = regTipoCuenta.getCheckedRadioButtonId();
+
+        if (optTipoCuenta == -1) {
+
+            Toast.makeText(context, "Debe elegir un tipo de cuenta.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validarDatosVendedor(){
+
+        if(!validarAliasCbu() | !validarCbu()){
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validarAliasCbu(){
+        String ctaAlias = regCtaAlias.getText().toString().trim();
+        regCtaAlias.setError(null);
+        if(optEsVendedor.isChecked()){
+            if(ctaAlias.isEmpty()){
+                regCtaAlias.setError("Debe ingresar un alias");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean validarCbu(){
+        String ctaCbu = regCtaCbu.getText().toString().trim();
+        regCtaCbu.setError(null);
+        if(optEsVendedor.isChecked()){
+            if(ctaCbu.isEmpty()){
+                regCtaCbu.setError("Debe ingresar un cbu");
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 
 
 

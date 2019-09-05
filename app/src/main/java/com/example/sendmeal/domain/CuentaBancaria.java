@@ -38,6 +38,7 @@ public class CuentaBancaria {
         this.cbu = cbu;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,4 +53,15 @@ public class CuentaBancaria {
     public int hashCode() {
         return Objects.hash(id, alias, cbu);
     }
+
+    @Override
+    public String toString() {
+        return "CuentaBancaria{" +
+                "id=" + id +
+                ", alias='" + alias + '\'' +
+                ", cbu='" + cbu + '\'' +
+                '}';
+    }
 }
+
+
