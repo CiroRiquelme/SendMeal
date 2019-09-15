@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".AltaPlatosActivity">
+
+
+    <include layout="@layout/toolbar_back"></include>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tvPlatoId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="@string/alta_plato_id">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPlatoId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            app:errorEnabled="true"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tvPlatoNombre"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPlatoNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/alta_plato_nombre"
+            android:inputType="none|textPersonName" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tvPlatoDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="@string/alta_plato_descripcion">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPlatoDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tvPlatoPrecio"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="@string/alta_plato_precio">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPlatoPrecio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvPlatoCalorias"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/alta_plato_calorias">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPlatoCalorias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPlatoGuardar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alta_plato_guardar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:backgroundTint="#009688"></com.google.android.material.button.MaterialButton>
+
+</LinearLayout>

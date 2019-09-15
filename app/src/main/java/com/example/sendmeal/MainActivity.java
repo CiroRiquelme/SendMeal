@@ -1,11 +1,15 @@
 package com.example.sendmeal;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,6 +25,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.sendmeal.Utilidades.DatePickerFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 
 import java.text.DateFormat;
@@ -28,9 +33,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.regex.Pattern;
-
-
-
 
 public class MainActivity extends AppCompatActivity   {
 
@@ -89,6 +91,19 @@ public class MainActivity extends AppCompatActivity   {
         final Context context = getApplicationContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        Toolbar toolbar = findViewById(R.id.toolbarBack);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+/*            getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+            getSupportActionBar().setDisplayUseLogoEnabled(true);*/
+        }else
+        {
+            Toast.makeText(getApplicationContext(), "Es nulll.", Toast.LENGTH_SHORT).show();
+        }
 
         esVendedor = findViewById(R.id.layoutCuenta);
         optEsVendedor = (Switch) findViewById(R.id.optEsVendedor);
@@ -232,6 +247,8 @@ public class MainActivity extends AppCompatActivity   {
 
             if(validarNombre() & validarClave() & validarMail() & validarDatosTarjeta() & validarTipoCuenta() & validarDatosVendedor()){
                 Toast.makeText(getApplicationContext(),"Creando Usuario ...",Toast.LENGTH_LONG).show();
+/*                Intent i = new Intent(MainActivity.this,HomeActivity.class);
+                startActivity(i);*/
             }else{
 
             }
@@ -393,9 +410,17 @@ public class MainActivity extends AppCompatActivity   {
         return true;
     }
 
+    // del menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+             case android.R.id.home:
+             onBackPressed();
+             return true;
+             }
+             return super.onOptionsItemSelected(item);
+    }
 
 
-
-
-
-}
+    }

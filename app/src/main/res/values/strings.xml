@@ -1,28 +1,29 @@
 <resources>
+
     <string name="app_name">SendMeal</string>
+
+    <!--Home -->
+    <string name="msj_bienvenida">Bienvenido!</string>
+
+
+    <!--Pantalla de Registro -->
     <string name="registro_titulo">Registrar Usuario</string>
     <string name="registro_nombre">Nombre</string>
     <string name="registro_clave">Clave</string>
     <string name="registro_clave2">Repetir Clave</string>
     <string name="registro_correo">Correo Electronico</string>
     <string name="registro_tarjeta">Tarjeta de Credito</string>
-
     <string name="registro_numero_tarjeta">Número</string>
     <string name="registro_ccv">CCV</string>
     <string name="registro_fecha_vencimiento">MM/AA</string>
-
-
     <string name="registro_tipo_cuenta">Tipo de Cuenta</string>
     <string name="registro_tipo_base">Base</string>
     <string name="registro_tipo_premium">Premium</string>
     <string name="registro_tipo_full">Full</string>
-
     <string name="registro_credito">Credito Inicial</string>
-
     <string name="registro_notificar">Notificar por correo electronico</string>
     <string name="registro_notificar_button_off">NO ENVIAR NOTIFICACIONES AL MAIL</string>
     <string name="registro_notificar_button_on">ENVIAR NOTIFICACIONES AL MAIL</string>
-
     <string name="registro_vendedor">Es vendedor</string>
     <string name="registro_cbu_alias">Alias CBU</string>
     <string name="registro_cbu">CBU</string>
@@ -30,5 +31,22 @@
     <string name="registrar_registrar">REGISTRAR</string>
 
     <!--<string name=""></string>-->
+
+    <!--Tool Bar -->
+
+
+    <!-- Alta de platos -->
+    <string name="alta_plato_id">Id</string>
+    <string name="alta_plato_nombre">Nombre</string>
+    <string name="alta_plato_descripcion">Descripcion</string>
+    <string name="alta_plato_precio">Precio</string>
+    <string name="alta_plato_calorias">Calorias</string>
+    <string name="alta_plato_guardar">Guardar</string>
+
+
+
+    <!--Lista de platos -->
+
+    <string name="lista_platos_imagen">imagen_plato</string>
 
 </resources>
