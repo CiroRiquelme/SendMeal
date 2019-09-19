@@ -27,10 +27,12 @@ public class ListaPlatosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_platos);
 
         Toolbar myToolbar =  findViewById(R.id.toolbarBack);
+        myToolbar.setTitle("Lista de platos");
         setSupportActionBar(myToolbar);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 /*            getSupportActionBar().setLogo(R.mipmap.ic_launcher);
             getSupportActionBar().setDisplayUseLogoEnabled(true);*/
         }else

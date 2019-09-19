@@ -31,10 +31,12 @@ public class AltaPlatosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alta_platos);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarBack);
+        myToolbar.setTitle("Alta de platos");
         setSupportActionBar(myToolbar);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 /*            getSupportActionBar().setLogo(R.mipmap.ic_launcher);
             getSupportActionBar().setDisplayUseLogoEnabled(true);*/
         }else

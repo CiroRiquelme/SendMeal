@@ -93,11 +93,14 @@ public class MainActivity extends AppCompatActivity   {
         setContentView(R.layout.activity_main);
 
 
-        Toolbar toolbar = findViewById(R.id.toolbarBack);
-        setSupportActionBar(toolbar);
+        Toolbar myToolbar = findViewById(R.id.toolbarBack);
+        myToolbar.setTitle("Registro de usuario");
+
+        setSupportActionBar(myToolbar);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 /*            getSupportActionBar().setLogo(R.mipmap.ic_launcher);
             getSupportActionBar().setDisplayUseLogoEnabled(true);*/
         }else

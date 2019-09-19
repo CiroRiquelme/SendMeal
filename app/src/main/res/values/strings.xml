@@ -48,5 +48,7 @@
     <!--Lista de platos -->
 
     <string name="lista_platos_imagen">imagen_plato</string>
+    <string name="button_guardar">GUARDAR</string>
+    <string name="button_cancel">CANCELAR</string>
 
 </resources>
