@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.sendmeal.domain.Plato;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -23,6 +24,12 @@ public class AltaPlatosActivity extends AppCompatActivity {
     TextInputEditText etCalorias;
 
     MaterialButton btnGuardar;
+
+    Integer pid;
+    String ptitulo;
+    String pdescripcion;
+    Double pprecio;
+    Integer pcalorias;
 
 
     @Override
@@ -62,6 +69,10 @@ public class AltaPlatosActivity extends AppCompatActivity {
         public void onClick(View view) {
 
             if(validarId() & validarNombre() & validarDescripcion() & validarPrecio() & validarCalorias()){
+
+                Plato nuevoPlato = new Plato(pid, ptitulo, pdescripcion, pprecio,pcalorias);
+
+
                 Snackbar.make(btnGuardar, "Plato creado con exito",Snackbar.LENGTH_SHORT).show();
             }
 
@@ -84,6 +95,7 @@ public class AltaPlatosActivity extends AppCompatActivity {
             }
         }
         etId.setError(null);
+        AltaPlatosActivity.this.pid = id;
         return true;
     }
     private boolean validarNombre(){
@@ -93,6 +105,7 @@ public class AltaPlatosActivity extends AppCompatActivity {
             return  false;
         }
         etNombre.setError(null);
+        ptitulo = nombre;
         return true;
     }
     private boolean validarDescripcion() {
@@ -113,6 +126,7 @@ public class AltaPlatosActivity extends AppCompatActivity {
             return  false;
         }
         etPrecio.setError(null);
+        pprecio = Double.valueOf(precio);
         return true;
     }
     private boolean validarCalorias(){
@@ -123,6 +137,8 @@ public class AltaPlatosActivity extends AppCompatActivity {
         }
 
         etCalorias.setError(null);
+
+        pcalorias = Integer.valueOf(calorias);
         return true;
     }
 }
