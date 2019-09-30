@@ -2,6 +2,7 @@ package com.example.sendmeal.Utilidades;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 
@@ -13,9 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sendmeal.AltaPlatosActivity;
+import com.example.sendmeal.HomeActivity;
 import com.example.sendmeal.ListaPlatosActivity;
 import com.example.sendmeal.R;
 import com.example.sendmeal.domain.Plato;
@@ -57,7 +60,7 @@ public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAd
     @Override
     public void onBindViewHolder(@NonNull final PlatosRecyclerAdapter.PlatoViewHolder holder, final int position) {
 
-        Plato plato = mDataset.get(position);
+        final Plato plato = mDataset.get(position);
 
         holder.imagenPlato.setImageResource(R.drawable.hamburguesa);
         holder.tvnombrePlato.setText(plato.getTitulo());
@@ -70,7 +73,7 @@ public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAd
         Button.OnClickListener btnEditarListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(holder.btnEditar, "Realizar Accion",Snackbar.LENGTH_SHORT).show();
+
 
                 Intent i = new Intent(contextActividad, AltaPlatosActivity.class);
                 i.putExtra("indice",position);
@@ -81,7 +84,30 @@ public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAd
         Button.OnClickListener btnQuitarListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(holder.btnQuitar, "Realizar Accion",Snackbar.LENGTH_SHORT).show();
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(contextActividad);
+                builder.setTitle(R.string.titulo_dialog_quitar)
+                        .setMessage(R.string.mensaje_dialog_quitar)
+                        .setPositiveButton(R.string.confirmir_quitar, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Snackbar.make(holder.btnEditar, "Plato eliminado correctamente",Snackbar.LENGTH_SHORT).show();
+
+                                HomeActivity.LISTA_PLATOS.remove(position);
+                                ListaPlatosActivity.actualizarLista();
+
+
+                            }
+                        })
+                        .setNegativeButton(R.string.cancelar_quitar, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Snackbar.make(holder.btnEditar, "El plato no ha sido eliminado",Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         };
 

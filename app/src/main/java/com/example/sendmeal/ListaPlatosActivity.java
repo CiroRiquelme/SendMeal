@@ -24,7 +24,7 @@ public class ListaPlatosActivity extends AppCompatActivity {
 
 
     private RecyclerView mRecyclerView;
-    private  RecyclerView.Adapter mAdapter;
+    private static RecyclerView.Adapter mAdapter;
     private  RecyclerView.LayoutManager mLayoutManager;
 
      Button btnEditar;
@@ -65,6 +65,12 @@ public class ListaPlatosActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        mAdapter.notifyDataSetChanged();
+    }
+
+
+    //Cree un metodo static para poder actualizar la lista
+    public static void actualizarLista(){
         mAdapter.notifyDataSetChanged();
     }
 

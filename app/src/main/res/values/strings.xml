@@ -53,4 +53,9 @@
     <string name="lista_platos_quitar">QUITAR</string>
     <string name="lista_platos_oferta">OFERTA</string>
 
+    <string name="titulo_dialog_quitar">ELIMINAR UN PLATO</string>
+    <string name="mensaje_dialog_quitar">¿Desea eliminar el plato de la lista?</string>
+    <string name="confirmir_quitar">CONFIRMAR</string>
+    <string name="cancelar_quitar">CANCELAR</string>
+
 </resources>
