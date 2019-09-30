@@ -8,8 +8,15 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.sendmeal.domain.Plato;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class HomeActivity extends AppCompatActivity {
+
+    public static List<Plato> LISTA_PLATOS = new ArrayList<>();
 
     Toolbar myToolbar;
 
@@ -17,6 +24,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Plato p1 = new Plato(01, "Hamburguesa", "Completa", 100.00,1000);
+        HomeActivity.LISTA_PLATOS.add(p1);
 
 
         myToolbar = findViewById(R.id.home_toolbar);

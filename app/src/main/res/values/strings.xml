@@ -42,13 +42,15 @@
     <string name="alta_plato_precio">Precio</string>
     <string name="alta_plato_calorias">Calorias</string>
     <string name="alta_plato_guardar">Guardar</string>
-
+    <string name="button_guardar">GUARDAR</string>
+    <string name="button_cancel">CANCELAR</string>
 
 
     <!--Lista de platos -->
 
     <string name="lista_platos_imagen">imagen_plato</string>
-    <string name="button_guardar">GUARDAR</string>
-    <string name="button_cancel">CANCELAR</string>
+    <string name="lista_platos_editar">EDITAR</string>
+    <string name="lista_platos_quitar">QUITAR</string>
+    <string name="lista_platos_oferta">OFERTA</string>
 
 </resources>

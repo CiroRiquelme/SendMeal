@@ -10,6 +10,7 @@
     android:layout_marginRight="10dp"
     android:layout_marginBottom="10dp"
     android:layout_marginTop="10dp"
+    style="?android:attr/buttonBarButtonStyle"
     >
 
 
@@ -20,8 +21,8 @@
 
         <ImageView
             android:id="@+id/plato_imagen"
-            android:layout_width="match_parent"
-            android:layout_height="181dp"
+            android:layout_width="169dp"
+            android:layout_height="187dp"
             android:layout_weight="1"
             android:contentDescription="@string/lista_platos_imagen"
             app:srcCompat="@drawable/hamburguesa" />
@@ -51,10 +52,42 @@
             <TextView
                 android:id="@+id/tvdescripcionPlato"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="79dp"
                 android:text="@string/alta_plato_descripcion"
                 android:textAllCaps="true"
                 android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonEditar"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:layout_weight="1"
+                    android:text="@string/lista_platos_editar" />
+
+                <Button
+                    android:id="@+id/buttonQuitar"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:layout_weight="1"
+                    android:text="@string/lista_platos_quitar" />
+
+                <Button
+                    android:id="@+id/buttonOferta"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/lista_platos_oferta" />
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -3,7 +3,9 @@ package com.example.sendmeal;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ public class AltaPlatosActivity extends AppCompatActivity {
     String pdescripcion;
     Double pprecio;
     Integer pcalorias;
+    private Plato p;
 
 
     @Override
@@ -48,7 +51,7 @@ public class AltaPlatosActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayUseLogoEnabled(true);*/
         }else
         {
-            Toast.makeText(getApplicationContext(), "Es nulll.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Es null.", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -58,9 +61,26 @@ public class AltaPlatosActivity extends AppCompatActivity {
         etDescripcion= findViewById(R.id.etPlatoDescripcion);
         etPrecio = findViewById(R.id.etPlatoPrecio);
         etCalorias = findViewById(R.id.etPlatoCalorias);
-        btnGuardar = findViewById(R.id.btnPlatoGuardar);
 
+        btnGuardar = findViewById(R.id.btnPlatoGuardar);
         btnGuardar.setOnClickListener(btnGuardarListener);
+
+
+
+
+        if(getIntent().getExtras()!= null){
+            Integer indice = getIntent().getExtras().getInt("indice");
+
+            p = HomeActivity.LISTA_PLATOS.get(indice);
+
+            etId.setText(p.getId().toString());
+            etNombre.setText(p.getTitulo());
+            etDescripcion.setText((p.getDescripcion()));
+            etPrecio.setText(p.getPrecio().toString());
+            etCalorias.setText(p.getCalorias().toString());
+        }else{
+
+        }
     }
 
 
@@ -68,13 +88,27 @@ public class AltaPlatosActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
 
-            if(validarId() & validarNombre() & validarDescripcion() & validarPrecio() & validarCalorias()){
 
-                Plato nuevoPlato = new Plato(pid, ptitulo, pdescripcion, pprecio,pcalorias);
+            if(getIntent().getExtras()!= null){
+                if(validarId() & validarNombre() & validarDescripcion() & validarPrecio() & validarCalorias()){
+                    p.setId(pid);
+                    p.setCalorias(pcalorias);
+                    p.setDescripcion(pdescripcion);
+                    p.setPrecio(pprecio);
+                    p.setTitulo(ptitulo);
+                    finish();
+                }
+            }else{
+                if(validarId() & validarNombre() & validarDescripcion() & validarPrecio() & validarCalorias()){
+
+                    Plato nuevoPlato = new Plato(pid, ptitulo, pdescripcion, pprecio,pcalorias);
+                    HomeActivity.LISTA_PLATOS.add(nuevoPlato);
 
 
-                Snackbar.make(btnGuardar, "Plato creado con exito",Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(btnGuardar, "Plato creado con exito",Snackbar.LENGTH_SHORT).show();
+                }
             }
+
 
 
 
@@ -115,7 +149,7 @@ public class AltaPlatosActivity extends AppCompatActivity {
             return false;
         }
 
-
+        pdescripcion=desc;
         etDescripcion.setError(null);
         return true;
     }
