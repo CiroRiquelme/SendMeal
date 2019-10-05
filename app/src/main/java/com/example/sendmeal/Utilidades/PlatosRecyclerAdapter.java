@@ -77,6 +77,7 @@ public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAd
 
                 Intent i = new Intent(contextActividad, AltaPlatosActivity.class);
                 i.putExtra("indice",position);
+                i.setAction("EDITAR");
                 ((Activity)contextActividad).startActivityForResult(i,CODIGO_EDITAR_PLATO);
             }
         };
@@ -114,7 +115,31 @@ public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAd
         Button.OnClickListener btnOfertaListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(holder.btnOferta,toString,Snackbar.LENGTH_SHORT).show();
+
+                /*Snackbar.make(holder.btnOferta, "El plato "+HomeActivity.LISTA_PLATOS.get(position).getTitulo()+" se encuentra en oferta",Snackbar.LENGTH_SHORT).show();*/
+                //Hilo secundario
+
+                plato.setEnOferta(true);
+
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            Thread.currentThread().sleep(10000);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        Intent i = new Intent();
+                        i.setAction(MyReceiver.EVENTO_01);
+                        i.putExtra("indice",position);
+                        contextActividad.sendBroadcast(i);
+
+
+                    }
+                };
+                Thread t1 = new Thread(r);
+                t1.start();
             }
         };
 

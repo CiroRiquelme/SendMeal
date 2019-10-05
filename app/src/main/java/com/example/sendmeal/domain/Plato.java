@@ -12,26 +12,29 @@ public class Plato {
     private Double precio;
     private Integer calorias;
 
-    private List<Plato> listaPlatos;
 
-    public static List<Plato> lista(){
-        ArrayList<Plato> listaPlatos = new ArrayList<>();
-
-       Plato p1 = new Plato(01, "Hamburguesa", "Completa", 100.00,1000);
-       Plato p2 = new Plato(02, "Hamburguesa ", "Americana", 200.00,2000);
-       listaPlatos.add(p1);
-       listaPlatos.add(p2);
-
-        return listaPlatos;
+    @Override
+    public String toString() {
+        return "Plato{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", precio=" + precio +
+                ", calorias=" + calorias +
+                ", enOferta=" + enOferta +
+                '}';
     }
 
-    public List<Plato> getListaPlatos() {
-        return listaPlatos;
+    public Boolean getEnOferta() {
+        return enOferta;
     }
 
-    public void setListaPlatos(List<Plato> listaPlatos) {
-        this.listaPlatos = listaPlatos;
+    public void setEnOferta(Boolean enOferta) {
+        this.enOferta = enOferta;
     }
+
+
+    private Boolean enOferta;
 
     public Plato(Integer id, String titulo, String descripcion, Double precio, Integer calorias) {
         this.id = id;
@@ -98,14 +101,4 @@ public class Plato {
         return Objects.hash(id, titulo, descripcion, precio, calorias);
     }
 
-    @Override
-    public String toString() {
-        return "Plato{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", precio=" + precio +
-                ", calorias=" + calorias +
-                '}';
-    }
 }

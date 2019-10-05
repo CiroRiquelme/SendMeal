@@ -103,7 +103,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/cancel_button"
+            android:id="@+id/btnCancelar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_cancel"
@@ -121,7 +121,7 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cancel_button" />
+            app:layout_constraintTop_toTopOf="@+id/btnCancelar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

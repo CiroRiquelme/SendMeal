@@ -6,12 +6,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.sendmeal.Utilidades.MyReceiver;
 import com.example.sendmeal.Utilidades.PlatosRecyclerAdapter;
 import com.example.sendmeal.domain.Plato;
 import com.google.android.material.snackbar.Snackbar;
@@ -20,16 +23,9 @@ import java.util.ArrayList;
 
 public class ListaPlatosActivity extends AppCompatActivity {
 
-
-
-
     private RecyclerView mRecyclerView;
     private static RecyclerView.Adapter mAdapter;
     private  RecyclerView.LayoutManager mLayoutManager;
-
-     Button btnEditar;
-     Button btnQuitar;
-     Button btnOferta;
 
 
     @Override
@@ -61,6 +57,12 @@ public class ListaPlatosActivity extends AppCompatActivity {
         mAdapter = new PlatosRecyclerAdapter(HomeActivity.LISTA_PLATOS);
         mRecyclerView.setAdapter(mAdapter);
 
+        BroadcastReceiver br = new MyReceiver();
+        IntentFilter filtro = new IntentFilter();
+        filtro.addAction(MyReceiver.EVENTO_01);
+        getApplication().getApplicationContext().registerReceiver(br,filtro);
+
+
         }
 
     @Override
@@ -73,5 +75,7 @@ public class ListaPlatosActivity extends AppCompatActivity {
     public static void actualizarLista(){
         mAdapter.notifyDataSetChanged();
     }
+
+
 
 };

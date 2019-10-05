@@ -17,8 +17,6 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class AltaPlatosActivity extends AppCompatActivity {
 
-
-
     TextInputEditText etId;
     TextInputEditText etNombre;
     TextInputEditText etDescripcion;
@@ -26,12 +24,14 @@ public class AltaPlatosActivity extends AppCompatActivity {
     TextInputEditText etCalorias;
 
     MaterialButton btnGuardar;
+    MaterialButton btnCancelar;
 
     Integer pid;
     String ptitulo;
     String pdescripcion;
     Double pprecio;
     Integer pcalorias;
+
     private Plato p;
 
 
@@ -65,20 +65,49 @@ public class AltaPlatosActivity extends AppCompatActivity {
         btnGuardar = findViewById(R.id.btnPlatoGuardar);
         btnGuardar.setOnClickListener(btnGuardarListener);
 
+        btnCancelar = findViewById(R.id.btnCancelar);
+        btnCancelar.setOnClickListener(btnCancelarListener);
+
+
 
 
 
         if(getIntent().getExtras()!= null){
-            Integer indice = getIntent().getExtras().getInt("indice");
+            if(getIntent().getAction()=="EDITAR"){
+                Snackbar.make(btnGuardar, "Hay que editar",Snackbar.LENGTH_SHORT).show();
 
-            p = HomeActivity.LISTA_PLATOS.get(indice);
+                Integer indice = getIntent().getExtras().getInt("indice");
 
-            etId.setText(p.getId().toString());
-            etNombre.setText(p.getTitulo());
-            etDescripcion.setText((p.getDescripcion()));
-            etPrecio.setText(p.getPrecio().toString());
-            etCalorias.setText(p.getCalorias().toString());
-        }else{
+                p = HomeActivity.LISTA_PLATOS.get(indice);
+
+                etId.setText(p.getId().toString());
+                etNombre.setText(p.getTitulo());
+                etDescripcion.setText((p.getDescripcion()));
+                etPrecio.setText(p.getPrecio().toString());
+                etCalorias.setText(p.getCalorias().toString());
+            }else{
+                if(getIntent().getAction()=="OFERTA"){
+
+                    etId.setEnabled(false);
+                    etNombre.setEnabled(false);
+                    etDescripcion.setEnabled(false);
+                    etPrecio.setEnabled(false);
+                    etCalorias.setEnabled(false);
+
+                    Integer indiceOferta = getIntent().getExtras().getInt("indiceOferta");
+                    Snackbar.make(btnGuardar, "Hay que mostrar oferta "+"Indice "+indiceOferta,Snackbar.LENGTH_SHORT).show();
+
+                    p = HomeActivity.LISTA_PLATOS.get(indiceOferta);
+
+                    etId.setText(p.getId().toString());
+                    etNombre.setText(p.getTitulo());
+                    etDescripcion.setText((p.getDescripcion()));
+                    etPrecio.setText(p.getPrecio().toString());
+                    etCalorias.setText(p.getCalorias().toString());
+                }
+            }
+
+
 
         }
     }
@@ -87,7 +116,6 @@ public class AltaPlatosActivity extends AppCompatActivity {
     private MaterialButton.OnClickListener btnGuardarListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
 
             if(getIntent().getExtras()!= null){
                 if(validarId() & validarNombre() & validarDescripcion() & validarPrecio() & validarCalorias()){
@@ -106,12 +134,16 @@ public class AltaPlatosActivity extends AppCompatActivity {
 
 
                     Snackbar.make(btnGuardar, "Plato creado con exito",Snackbar.LENGTH_SHORT).show();
+                    finish();
                 }
             }
+        }
+    };
 
-
-
-
+    private MaterialButton.OnClickListener btnCancelarListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finish();
         }
     };
 

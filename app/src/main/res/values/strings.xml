@@ -58,4 +58,7 @@
     <string name="confirmir_quitar">CONFIRMAR</string>
     <string name="cancelar_quitar">CANCELAR</string>
 
+    <string name="channel_name">"Canal_1</string>
+    <string name="channel_description">el canal 1</string>
+
 </resources>

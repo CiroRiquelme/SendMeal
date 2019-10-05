@@ -16,21 +16,22 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public static List<Plato> LISTA_PLATOS = new ArrayList<>();
-
     Toolbar myToolbar;
+
+    public static List<Plato> LISTA_PLATOS = new ArrayList<>();
+    Plato p1 = new Plato(01, "Hamburguesa", "Completa", 100.00,1000);
+    Plato p2 = new Plato(02, "Hamburguesa ", "Americana", 200.00,2000);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Plato p1 = new Plato(01, "Hamburguesa", "Completa", 100.00,1000);
-        HomeActivity.LISTA_PLATOS.add(p1);
-
-
         myToolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(myToolbar);
+
+        LISTA_PLATOS.add(p1);
+        LISTA_PLATOS.add(p2);
     }
 
 
@@ -69,7 +70,4 @@ public class HomeActivity extends AppCompatActivity {
 
         }
     }
-
-
-
 }
