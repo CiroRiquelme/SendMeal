@@ -13,7 +13,7 @@ import com.example.sendmeal.domain.Plato;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+
 
 public class AltaPlatosActivity extends AppCompatActivity {
 
@@ -22,6 +22,7 @@ public class AltaPlatosActivity extends AppCompatActivity {
     TextInputEditText etDescripcion;
     TextInputEditText etPrecio;
     TextInputEditText etCalorias;
+
 
     MaterialButton btnGuardar;
     MaterialButton btnCancelar;

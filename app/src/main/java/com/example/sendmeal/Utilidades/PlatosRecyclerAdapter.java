@@ -79,6 +79,7 @@ public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAd
                 i.putExtra("indice",position);
                 i.setAction("EDITAR");
                 ((Activity)contextActividad).startActivityForResult(i,CODIGO_EDITAR_PLATO);
+
             }
         };
 
