@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,11 @@ import com.example.sendmeal.AltaPlatosActivity;
 import com.example.sendmeal.HomeActivity;
 import com.example.sendmeal.ListaPlatosActivity;
 import com.example.sendmeal.R;
+import com.example.sendmeal.dao.PlatoRepository;
 import com.example.sendmeal.domain.Plato;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
-
 
 
 public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAdapter.PlatoViewHolder> {
@@ -96,9 +97,9 @@ public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAd
                             public void onClick(DialogInterface dialog, int which) {
                                 Snackbar.make(holder.btnEditar, "Plato eliminado correctamente",Snackbar.LENGTH_SHORT).show();
 
-                                HomeActivity.LISTA_PLATOS.remove(position);
-                                ListaPlatosActivity.actualizarLista();
-
+                                Plato p = PlatoRepository.getInstance().getListaPlatos().get(position);
+                               Handler miHandler = ( (ListaPlatosActivity) contextActividad).getMiHandler();
+                               PlatoRepository.getInstance().borrarPlato(p,miHandler);
 
                             }
                         })
@@ -135,8 +136,6 @@ public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAd
                         i.setAction(MyReceiver.EVENTO_01);
                         i.putExtra("indice",position);
                         contextActividad.sendBroadcast(i);
-
-
                     }
                 };
                 Thread t1 = new Thread(r);

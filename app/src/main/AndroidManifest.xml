@@ -12,13 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BusquedaDePlatosActivity"></activity>
+        <activity android:name=".BusquedaDePlatosActivity" />
         <activity
             android:name=".ListaPlatosActivity"
-            android:parentActivityName=".HomeActivity"></activity>
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".AltaPlatosActivity"
-            android:parentActivityName=".HomeActivity"></activity>
+            android:parentActivityName=".HomeActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,8 +27,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:parentActivityName=".HomeActivity"></activity>
+            android:name=".RegistroUsuarioActivity"
+            android:parentActivityName=".HomeActivity" />
             <!--android:theme="@style/AppTheme.R"></activity> -->
     </application>
 

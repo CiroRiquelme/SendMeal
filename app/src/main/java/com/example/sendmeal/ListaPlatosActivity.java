@@ -10,12 +10,17 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.sendmeal.Utilidades.MyReceiver;
 import com.example.sendmeal.Utilidades.PlatosRecyclerAdapter;
+import com.example.sendmeal.dao.PlatoRepository;
 import com.example.sendmeal.domain.Plato;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -24,9 +29,8 @@ import java.util.ArrayList;
 public class ListaPlatosActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-    private static RecyclerView.Adapter mAdapter;
-    private  RecyclerView.LayoutManager mLayoutManager;
-
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +58,13 @@ public class ListaPlatosActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager((this));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new PlatosRecyclerAdapter(HomeActivity.LISTA_PLATOS);
-        mRecyclerView.setAdapter(mAdapter);
+
+        //Aca van los datos a mostrar
+        // mAdapter = new PlatosRecyclerAdapter(HomeActivity.LISTA_PLATOS);
+
+        PlatoRepository.getInstance().listarPlato(miHandler);
+
+
 
         BroadcastReceiver br = new MyReceiver();
         IntentFilter filtro = new IntentFilter();
@@ -70,12 +79,25 @@ public class ListaPlatosActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
     }
 
-
-    //Cree un metodo static para poder actualizar la lista
-    public static void actualizarLista(){
-        mAdapter.notifyDataSetChanged();
+    public Handler getMiHandler() {
+        return miHandler;
     }
 
+    Handler miHandler = new Handler(Looper.myLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.arg1 ){
+                case PlatoRepository._CONSULTA_PLATO:
+                    mAdapter = new PlatosRecyclerAdapter(PlatoRepository.getInstance().getListaPlatos());
+                    mRecyclerView.setAdapter(mAdapter);
+                    break;
+                case PlatoRepository._BORRADO_PLATO:
+                    mAdapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+    };
 
 
-};
+
+}

@@ -1,12 +1,10 @@
 package com.example.sendmeal;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.MenuItem;
@@ -25,16 +23,12 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.sendmeal.Utilidades.DatePickerFragment;
-import com.google.android.material.snackbar.Snackbar;
 
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.regex.Pattern;
 
-public class MainActivity extends AppCompatActivity   {
+public class RegistroUsuarioActivity extends AppCompatActivity   {
 
 
 
@@ -81,7 +75,7 @@ public class MainActivity extends AppCompatActivity   {
     EditText regCtaAlias;
 
     int vtoMes;
-    int vtoAño;
+    int vtoAnio;
 
 
 
@@ -166,7 +160,7 @@ public class MainActivity extends AppCompatActivity   {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because january is zero
                // final String selectedDate = day + " / " + (month+1) + " / " + year;
-                vtoAño=year;
+                vtoAnio =year;
                 vtoMes=month+1;
                 final String selectedDate =  (month+1) + " / " + year;
                 regVto.setText(selectedDate);
@@ -329,13 +323,13 @@ public class MainActivity extends AppCompatActivity   {
         añoActual=añoActual +(int) (mesActual+3)/12 ;
         mesActual=(mesActual+3)%12;
 
-        if(vtoAño<añoActual){
+        if(vtoAnio <añoActual){
 
             Toast.makeText(context, "Fecha de vencimiento no valida.", Toast.LENGTH_SHORT).show();
             regVto.setError("Fecha de vencimiento no valida.");
             return false;
         }else{
-            if(añoActual==vtoAño) {
+            if(añoActual== vtoAnio) {
                 if (vtoMes < mesActual) {
 
                     Toast.makeText(context, "Fecha de vencimiento no valida.", Toast.LENGTH_SHORT).show();

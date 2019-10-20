@@ -18,9 +18,7 @@ public class HomeActivity extends AppCompatActivity {
 
     Toolbar myToolbar;
 
-    public static List<Plato> LISTA_PLATOS = new ArrayList<>();
-    Plato p1 = new Plato(01, "Hamburguesa", "Completa", 100.00,1000);
-    Plato p2 = new Plato(02, "Hamburguesa ", "Americana", 200.00,2000);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         myToolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(myToolbar);
 
-        LISTA_PLATOS.add(p1);
-        LISTA_PLATOS.add(p2);
+
     }
 
 
@@ -53,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
 
             case R.id.home_registrar:
 
-                Intent registrarUsuario = new Intent(this, MainActivity.class);
+                Intent registrarUsuario = new Intent(this, RegistroUsuarioActivity.class);
                 startActivity(registrarUsuario);
                 return true;
 

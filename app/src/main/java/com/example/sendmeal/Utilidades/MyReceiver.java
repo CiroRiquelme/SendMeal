@@ -1,5 +1,6 @@
 package com.example.sendmeal.Utilidades;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,6 +17,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.example.sendmeal.AltaPlatosActivity;
 import com.example.sendmeal.HomeActivity;
 import com.example.sendmeal.R;
+import com.example.sendmeal.dao.PlatoRepository;
 
 public class MyReceiver extends BroadcastReceiver {
 
@@ -40,17 +42,19 @@ public class MyReceiver extends BroadcastReceiver {
         //Leer la utilidad de la FLAG
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 ,destino, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Toast.makeText(context,"=> "+intent.getAction()+ " "+ desPos,Toast.LENGTH_LONG).show();
-
         createNotificationChannel();
         NotificationCompat.Builder mBuilder = new
                 NotificationCompat.Builder(context,CANAL_MENSAJES_ID)
                 .setSmallIcon(R.drawable.hamburguesa)
                 .setContentTitle("SendMeal")
-                .setContentText("Oferta en plato "+ HomeActivity.LISTA_PLATOS.get(position).getTitulo()+ " indice "+position+", Aprovecha!")
+                .setContentText("Oferta en plato "+ PlatoRepository.getInstance().getListaPlatos().get(desPos).getTitulo()+ " Aprovecha!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setDefaults(Notification.DEFAULT_SOUND)
+                .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
+
+
 
         NotificationManagerCompat notificationManagerCompat =
                 NotificationManagerCompat.from(context);
