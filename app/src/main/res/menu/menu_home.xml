@@ -22,5 +22,13 @@
         android:icon="@drawable/baseline_account_circle_black_18dp"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/home_buscarItem"
+        android:title="BuscarItem"
+        android:icon="@drawable/busqueda"
+        app:showAsAction="ifRoom"
+
+        />
+
 
 </menu>

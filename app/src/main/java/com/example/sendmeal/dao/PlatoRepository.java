@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PlatoRepository {
 
 
-    public static String _SERVER = "http://192.168.1.21:5000/";
+    public static String _SERVER = "http://192.168.1.19:5000/";
     private List<Plato> listaPlatos;
 
     public static final int _ALTA_PLATO = 1;
@@ -102,6 +102,49 @@ public class PlatoRepository {
             @Override
             public void onFailure(Call<Plato> call, Throwable t) {
                 Log.d("APP_2","ERROR "+t.getMessage());
+                Message m = new Message();
+                m.arg1 = _ERROR_PLATO;
+                h.sendMessage(m);
+            }
+        });
+    }
+
+        public  void buscarPlatoPorPrecio(final Integer precioMin, final Integer precioMax, final Handler h){
+        Call<List<Plato>> llamada = this.platoRest.buscarPorPrecio(precioMin, precioMax);
+        llamada.enqueue(new Callback<List<Plato>>() {
+            @Override
+            public void onResponse(Call<List<Plato>> call, Response<List<Plato>> response) {
+                if(response.isSuccessful()){
+                    listaPlatos.clear();
+                    listaPlatos.addAll(response.body());
+                    Message m = new Message();
+                    m.arg1 = _CONSULTA_PLATO;
+                    h.sendMessage(m);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Plato>> call, Throwable t) {
+                Message m = new Message();
+                m.arg1 = _ERROR_PLATO;
+                h.sendMessage(m);
+            }
+        });
+    }
+    public void buscarPlatoPorNombre(final String nombre, final Handler h){
+        Call<List<Plato>> llamada = this.platoRest.buscarPorNombre(nombre);
+        llamada.enqueue(new Callback<List<Plato>>() {
+            @Override
+            public void onResponse(Call<List<Plato>> call, Response<List<Plato>> response) {
+                listaPlatos.clear();
+                listaPlatos.addAll(response.body());
+                Message m = new Message();
+                m.arg1 = _CONSULTA_PLATO;
+                h.sendMessage(m);
+            }
+
+            @Override
+            public void onFailure(Call<List<Plato>> call, Throwable t) {
                 Message m = new Message();
                 m.arg1 = _ERROR_PLATO;
                 h.sendMessage(m);
