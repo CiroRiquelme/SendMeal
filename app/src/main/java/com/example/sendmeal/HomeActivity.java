@@ -8,6 +8,9 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.sendmeal.dao.db.DBClient;
+import com.example.sendmeal.dao.db.PedidoDao;
+import com.example.sendmeal.domain.Pedido;
 import com.example.sendmeal.domain.Plato;
 
 import java.util.ArrayList;
@@ -27,6 +30,13 @@ public class HomeActivity extends AppCompatActivity {
 
         myToolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(myToolbar);
+
+
+        //Para probar la db
+        PedidoDao daoPedido= DBClient.getInstance(this).getPedidosDB().pedidoDao();
+        Pedido p1 = new Pedido(1,10.0,10.0);
+        daoPedido.insert(p1);
+
 
 
     }

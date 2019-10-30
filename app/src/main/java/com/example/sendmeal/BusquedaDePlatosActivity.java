@@ -75,8 +75,17 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
             String nombre = etNombre.getText().toString().trim();
             String precioMins = etPrecioMin.getText().toString().trim();
             String precioMaxs = etPrecioMax.getText().toString().trim();
-            Integer precioMin = Integer.valueOf(precioMins);
-            Integer precioMax = Integer.valueOf(precioMaxs);
+
+            Integer precioMin=0;
+            Integer precioMax=1000;
+
+            if(!precioMins.isEmpty()){
+                precioMin = Integer.valueOf(precioMins);
+            }
+            if(!precioMaxs.isEmpty()){
+                precioMax = Integer.valueOf(precioMaxs);
+            }
+
 
 
             // Faltan validaciones para que no salten excepciones.
