@@ -1,14 +1,17 @@
 package com.example.sendmeal.domain;
 
 
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class ItemsPedido {
+public class ItemsPedido   {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_item")
@@ -22,9 +25,9 @@ public class ItemsPedido {
     @Embedded
     private Plato platoPedido;
 
-
-
-
+    @Ignore
+    public ItemsPedido() {
+    }
 
     public ItemsPedido(Integer id, Integer cantidad, Double precioPedido, Pedido pedido, Plato platoPedido) {
         this.id = id;

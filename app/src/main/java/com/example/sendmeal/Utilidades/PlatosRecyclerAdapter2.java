@@ -7,6 +7,7 @@ import android.content.Intent;
 
 
 import android.os.Handler;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,24 +22,39 @@ import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sendmeal.AltaPlatosActivity;
+import com.example.sendmeal.CrearItemPedidoActivity;
 import com.example.sendmeal.HomeActivity;
 import com.example.sendmeal.ListaPlatosActivity;
 import com.example.sendmeal.R;
 import com.example.sendmeal.dao.PlatoRepository;
+import com.example.sendmeal.domain.ItemsPedido;
 import com.example.sendmeal.domain.Plato;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
-public class PlatosRecyclerAdapter2 extends RecyclerView.Adapter<PlatosRecyclerAdapter2.PlatoViewHolder> {
+public class PlatosRecyclerAdapter2 extends RecyclerView.Adapter<PlatosRecyclerAdapter2.PlatoViewHolder>  {
+
 
     private static final int CODIGO_EDITAR_PLATO = 987;
 
     Context contextActividad;
 
 
+    public   List<ItemsPedido> items = new ArrayList<>();
+
+
+
+    private SparseBooleanArray seleccionados;
+
     private List<Plato> mDataset;
+
+    public List<Plato> getmDataset() {
+        return mDataset;
+    }
 
     public PlatosRecyclerAdapter2 (List<Plato> myDataset) {
         this.mDataset= myDataset;
@@ -55,6 +71,17 @@ public class PlatosRecyclerAdapter2 extends RecyclerView.Adapter<PlatosRecyclerA
         return vh;
     }
 
+    /**Devuelve aquellos objetos marcados.*/
+    public LinkedList<Plato> obtenerSeleccionados(){
+        LinkedList<Plato> marcados = new LinkedList<>();
+        for (int i = 0; i < mDataset.size(); i++) {
+            if (seleccionados.get(i)){
+                marcados.add(mDataset.get(i));
+            }
+        }
+        return marcados;
+    }
+
 
 
     @Override
@@ -68,11 +95,28 @@ public class PlatosRecyclerAdapter2 extends RecyclerView.Adapter<PlatosRecyclerA
         holder.tvdescripcionPlato.setText(plato.getDescripcion());
 
 
+
+
         // asignar eventos a los botones.
 
         Button.OnClickListener btnAñadirListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                holder.btnAñadir.setEnabled(false);
+                holder.btnQuitar.setEnabled(true);
+
+                Plato p = PlatoRepository.getInstance().getListaPlatos().get(position);
+
+                ItemsPedido itemsPedido = new ItemsPedido();
+                itemsPedido.setCantidad(Integer.valueOf(holder.tvCantidadPlato.getText().toString()));
+                itemsPedido.setPlatoPedido(p);
+                Double precio = itemsPedido.getCantidad() * p.getPrecio();
+                itemsPedido.setPrecioPedido(precio);
+
+                items.add(itemsPedido);
+
+                (   (CrearItemPedidoActivity)contextActividad).addItem(itemsPedido);
 
             }
         };
@@ -80,6 +124,9 @@ public class PlatosRecyclerAdapter2 extends RecyclerView.Adapter<PlatosRecyclerA
         Button.OnClickListener btnQuitarListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.btnQuitar.setEnabled(false);
+                holder.btnAñadir.setEnabled(true);
+
             }
         };
 
@@ -115,8 +162,13 @@ public class PlatosRecyclerAdapter2 extends RecyclerView.Adapter<PlatosRecyclerA
 
     @Override
     public int getItemCount() {
+
         return mDataset.size();
     }
+
+
+
+
 
     public class PlatoViewHolder extends RecyclerView.ViewHolder {
 
@@ -155,5 +207,11 @@ public class PlatosRecyclerAdapter2 extends RecyclerView.Adapter<PlatosRecyclerA
 
 
 
+
+
+    }
+
+    public List<ItemsPedido> getItems() {
+        return items;
     }
 }

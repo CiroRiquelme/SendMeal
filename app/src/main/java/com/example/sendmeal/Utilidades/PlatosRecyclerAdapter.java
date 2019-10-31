@@ -38,6 +38,10 @@ public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAd
 
     private List<Plato> mDataset;
 
+    public static int getCodigoEditarPlato() {
+        return CODIGO_EDITAR_PLATO;
+    }
+
     public PlatosRecyclerAdapter (List<Plato> myDataset) {
         this.mDataset= myDataset;
     }

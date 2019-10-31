@@ -86,6 +86,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/btnCrearPedido" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonAgregarItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_agregar_item"
+                app:layout_constraintEnd_toStartOf="@+id/btnEnvarPedido"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

@@ -78,10 +78,10 @@ public class HomeActivity extends AppCompatActivity {
                 Intent altaPedido = new Intent(this, AltaPedidoActivity.class);
                 startActivity(altaPedido);
                 return true;
-/*            case R.id.home_añadirItemPedido:
-                Intent añadirItem = new Intent(this, AñadirItemPedidoActivity.class);
-                startActivity(añadirItem);
-                return true;*/
+            case R.id.home_crearItemPedido:
+                Intent crearItem = new Intent(this, CrearItemPedidoActivity.class);
+                startActivity(crearItem);
+                return true;
 
             default:
                 // If we got here, the user's action was not recognized.

@@ -39,8 +39,8 @@
         />
 
     <item
-        android:id="@+id/home_añadirItemPedido"
-        android:title="@string/menu_añadir_item_pedido"
+        android:id="@+id/home_crearItemPedido"
+        android:title="@string/menu_crear_item_pedido"
         app:showAsAction="ifRoom"
         />
 

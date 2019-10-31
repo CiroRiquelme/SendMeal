@@ -27,6 +27,7 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
     MaterialButton btnGuardar;
     MaterialButton btnCancelar;
 
+
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -55,8 +56,10 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
         btnCancelar = findViewById(R.id.btnCancelarBusqueda);
         btnGuardar = findViewById(R.id.btnBuscar);
 
+
         btnGuardar.setOnClickListener(btnGuardarListener);
         btnCancelar.setOnClickListener(btnCancelarListener);
+
 
         // Creacion del recycler view
         mRecyclerView = findViewById(R.id.recyclerPlatos);
@@ -93,6 +96,12 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
             if(!precioMaxs.isEmpty()){
                 precioMax = Integer.valueOf(precioMaxs);
             }
+        MaterialButton.OnClickListener btnAceptarListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        };
 
 
 

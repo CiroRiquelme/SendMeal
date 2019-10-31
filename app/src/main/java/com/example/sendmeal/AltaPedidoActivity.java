@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.example.sendmeal.dao.db.DBClient;
 import com.example.sendmeal.dao.db.PedidoDao;
 import com.example.sendmeal.domain.EstadoPedido;
+import com.example.sendmeal.domain.ItemsPedido;
 import com.example.sendmeal.domain.Pedido;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,8 +21,10 @@ import android.view.View;
 import com.example.sendmeal.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class AltaPedidoActivity extends AppCompatActivity {
 
@@ -32,6 +35,8 @@ public class AltaPedidoActivity extends AppCompatActivity {
 
     MaterialButton btnCrear;
     MaterialButton btnEnviar;
+    MaterialButton btnAgregar;
+    List<ItemsPedido> itemsPedidos = new ArrayList<>();
 
     Double lat;
     Double lng;
@@ -56,14 +61,44 @@ public class AltaPedidoActivity extends AppCompatActivity {
 
         btnCrear = findViewById(R.id.btnCrearPedido);
         btnEnviar = findViewById(R.id.btnEnvarPedido);
+        btnAgregar = findViewById(R.id.buttonAgregarItem);
+
 
         btnCrear.setOnClickListener(btnCrearPedido);
         btnEnviar.setOnClickListener(btnEnviarPedido);
+        btnAgregar.setOnClickListener(btnAgregarListener);
 
         btnEnviar.setEnabled(false);
 
 
     }
+
+    MaterialButton.OnClickListener btnAgregarListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent crearItem = new Intent(AltaPedidoActivity.this, CrearItemPedidoActivity.class);
+            startActivityForResult(crearItem,1);
+        }
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == 1) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                // The user picked a contact.
+                // The Intent's data Uri identifies which contact was selected.
+                // Do something with the contact here (bigger example below)
+                Bundle extras = data.getExtras();
+                List<ItemsPedido> list = (List<ItemsPedido>)extras.get("lista");
+                itemsPedidos.addAll(list);
+                etLng.setText(itemsPedidos.size());
+                Snackbar.make(btnCrear, "n = " + itemsPedidos.size(),Snackbar.LENGTH_LONG).show();
+            }
+        }
+    }
+
 
     private MaterialButton.OnClickListener btnCrearPedido = new View.OnClickListener() {
         @Override

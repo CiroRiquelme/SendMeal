@@ -12,12 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AñadirItemPedidoActivity"></activity>
+        <activity android:name=".CrearItemPedidoActivity">
+
+        </activity>
         <activity
             android:name=".AltaPedidoActivity"
             android:label="@string/title_activity_alta_pedido"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BusquedaDePlatosActivity" />
+        <activity android:name=".BusquedaDePlatosActivity"
+            android:parentActivityName=".HomeActivity"/>
+
         <activity
             android:name=".ListaPlatosActivity"
             android:parentActivityName=".HomeActivity" />

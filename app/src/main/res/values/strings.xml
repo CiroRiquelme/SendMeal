@@ -10,7 +10,7 @@
     <string name="menu_alta_pedido">Alta pedido</string>
     <string name="menu_busqueda_plato">Busqueda plato</string>
     <string name="menu_lista_plato">Lista Plato</string>
-    <string name="menu_añadir_item_pedido">Añadir item </string>
+    <string name="menu_crear_item_pedido">Crear item </string>
 
 
     <!--Pantalla de Registro -->
@@ -85,6 +85,7 @@
 
 
     <string name="cantidad_plato">Cantidad</string>
+    <string name="button_agregar_item">Agregar</string>
 
 
 </resources>
