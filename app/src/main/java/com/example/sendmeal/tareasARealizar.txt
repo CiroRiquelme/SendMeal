@@ -1,0 +1,5 @@
+Para la actividad de retrofit falta configurar bien las busquedas en base a lo ya hecho.
+
+Para room falta anotar correctamente la base de datos y
+ver de que manera guardar los items que pertenecen a cada pedido
+y la forma en la que se crean los pedidos completos.

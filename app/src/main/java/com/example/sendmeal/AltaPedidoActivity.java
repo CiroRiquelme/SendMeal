@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.example.sendmeal.dao.PlatoRepository;
 import com.example.sendmeal.dao.db.DBClient;
 import com.example.sendmeal.dao.db.PedidoDao;
 import com.example.sendmeal.domain.EstadoPedido;
@@ -16,12 +17,17 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 
 import com.example.sendmeal.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -83,20 +89,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (requestCode == 1) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                // The user picked a contact.
-                // The Intent's data Uri identifies which contact was selected.
-                // Do something with the contact here (bigger example below)
-                Bundle extras = data.getExtras();
-                List<ItemsPedido> list = (List<ItemsPedido>)extras.get("lista");
-                itemsPedidos.addAll(list);
-                etLng.setText(itemsPedidos.size());
-                Snackbar.make(btnCrear, "n = " + itemsPedidos.size(),Snackbar.LENGTH_LONG).show();
-            }
-        }
+
     }
 
 
@@ -119,7 +112,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
 
             bloquearCampos();
 
-            Snackbar.make(btnCrear, "Creando Pedido",Snackbar.LENGTH_LONG).show();
+
 
         }
     };
@@ -127,7 +120,9 @@ public class AltaPedidoActivity extends AppCompatActivity {
     private MaterialButton.OnClickListener btnEnviarPedido = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            pedidoActual.setEstado(EstadoPedido.ENVIADO);
+            PlatoRepository.getInstance().crearPedido(pedidoActual,miHandler);
+            Snackbar.make(btnEnviar, " Pedido Enviado al servidor",Snackbar.LENGTH_LONG).show();
         }
     };
 
@@ -163,6 +158,22 @@ public class AltaPedidoActivity extends AppCompatActivity {
         btnCrear.setEnabled(false);
         btnEnviar.setEnabled(true);
     }
+
+    Handler miHandler = new Handler(Looper.myLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+            Log.d("Alta Plato ","Vuelve al handler"+msg.arg1);
+
+            switch (msg.arg1 ){
+                case PlatoRepository._ALTA_PLATO: {
+
+                }
+                case PlatoRepository._UPDATE_PLATO: {
+
+                }
+            }
+        }
+    };
 
 }
 

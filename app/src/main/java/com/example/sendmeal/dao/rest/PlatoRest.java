@@ -1,5 +1,6 @@
 package com.example.sendmeal.dao.rest;
 
+import com.example.sendmeal.domain.Pedido;
 import com.example.sendmeal.domain.Plato;
 
 import java.util.List;
@@ -37,9 +38,14 @@ public interface PlatoRest {
     );
 
 
+
+
     // GET /posts?q=internet
 
     //Add _gte or _lte for getting a range
     //GET /posts?views_gte=10&views_lte=20
+
+    @POST("pedidos/")
+    Call<Pedido> crear(@Body Pedido pedido);
 
 }

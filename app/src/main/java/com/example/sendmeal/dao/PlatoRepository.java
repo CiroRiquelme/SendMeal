@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.sendmeal.HomeActivity;
 import com.example.sendmeal.dao.rest.PlatoRest;
+import com.example.sendmeal.domain.Pedido;
 import com.example.sendmeal.domain.Plato;
 
 import java.util.ArrayList;
@@ -21,7 +22,9 @@ public class PlatoRepository {
 
 
     public static String _SERVER = "http://192.168.1.11:5000/";
+//    public static String _SERVER = "http://10.0.2.2:5000/";
     private List<Plato> listaPlatos;
+    private List<Pedido> listaPedidos;
 
     public static final int _ALTA_PLATO = 1;
     public static final int _UPDATE_PLATO = 2;
@@ -38,6 +41,7 @@ public class PlatoRepository {
             _INSTANCE = new PlatoRepository();
             _INSTANCE.configurarRetrofit();
             _INSTANCE.listaPlatos = new ArrayList<>();
+            _INSTANCE.listaPedidos = new ArrayList<>();
         }
         return _INSTANCE;
     }
@@ -208,6 +212,35 @@ public class PlatoRepository {
             }
         });
     }
+
+    public void crearPedido(Pedido p, final Handler h){
+        Call<Pedido> llamada = this.platoRest.crear(p);
+        llamada.enqueue(new Callback<Pedido>() {
+            @Override
+            public void onResponse(Call<Pedido> call, Response<Pedido> response) {
+                Log.d("APP_2","Despues que ejecuta"+ response.isSuccessful());
+                Log.d("APP_2","COdigo"+ response.code());
+
+                if(response.isSuccessful()){
+                    Log.d("APP_2","EJECUTO");
+                    listaPedidos.add(response.body());
+                    Message m = new Message();
+                    m.arg1 = _ALTA_PLATO;
+                    h.sendMessage(m);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Pedido> call, Throwable t) {
+                Log.d("APP_2","ERROR "+t.getMessage());
+                Message m = new Message();
+                m.arg1 = _ERROR_PLATO;
+                h.sendMessage(m);
+            }
+        });
+    }
+
+
     public List<Plato> getListaPlatos() {
         return listaPlatos;
     }

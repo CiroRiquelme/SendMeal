@@ -1,6 +1,7 @@
 package com.example.sendmeal.domain;
 
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
@@ -10,8 +11,11 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-public class ItemsPedido   {
+public class ItemsPedido implements Parcelable  {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_item")
@@ -27,6 +31,12 @@ public class ItemsPedido   {
 
     @Ignore
     public ItemsPedido() {
+    }
+
+    public ItemsPedido(Parcel parcel){
+        id = parcel.readInt();
+        cantidad = parcel.readInt();
+        precioPedido = parcel.readDouble();
     }
 
     public ItemsPedido(Integer id, Integer cantidad, Double precioPedido, Pedido pedido, Plato platoPedido) {
@@ -87,4 +97,40 @@ public class ItemsPedido   {
                 ", platoPedido=" + platoPedido +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if(id!=null)parcel.writeInt(id);
+        if (cantidad!=null)parcel.writeInt(cantidad);
+        if(precioPedido!=null)parcel.writeDouble(precioPedido);
+        if(pedido!=null)parcel.writeInt(pedido.getId());
+        if(platoPedido!=null)parcel.writeInt(platoPedido.getId());
+    }
+
+    public static final Creator<ItemsPedido> CREATOR = new Creator<ItemsPedido>() {
+        @Override
+        public ItemsPedido createFromParcel(Parcel parcel) {
+            return new ItemsPedido(parcel);
+        }
+
+        @Override
+        public ItemsPedido[] newArray(int i) {
+            return new ItemsPedido[i];
+        }
+
+        public List<ItemsPedido> newArrayList(){
+            return new ArrayList<ItemsPedido>();
+        }
+    };
+
+
+
+
+
+
 }
