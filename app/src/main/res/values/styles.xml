@@ -10,18 +10,25 @@
     </style>
 
 
-
     <style name="TextAppearance.AppCompat.Button.Custom">
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="AppTheme.R">
         <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textAppearanceButton">@style/TextAppearance.AppCompat.Button.Custom</item>
+        <item name="android:textAppearanceButton">@style/TextAppearance.AppCompat.Button.Custom
+        </item>
 
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

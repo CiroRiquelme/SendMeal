@@ -33,9 +33,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
         //Para probar la db
-        PedidoDao daoPedido= DBClient.getInstance(this).getPedidosDB().pedidoDao();
+/*        PedidoDao daoPedido= DBClient.getInstance(this).getPedidosDB().pedidoDao();
         Pedido p1 = new Pedido(1,10.0,10.0);
-        daoPedido.insert(p1);
+        daoPedido.insert(p1);*/
 
 
 
@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.home_crearItem:
+            case R.id.home_crearItemPlato:
 
                 Intent altaPlatos = new Intent(this, AltaPlatosActivity.class);
                 startActivity(altaPlatos);
@@ -74,7 +74,14 @@ public class HomeActivity extends AppCompatActivity {
                 Intent busquedaPlatos = new Intent(this, BusquedaDePlatosActivity.class);
                 startActivity(busquedaPlatos);
                 return true;
-
+            case R.id.home_altaItemPedido:
+                Intent altaPedido = new Intent(this, AltaPedidoActivity.class);
+                startActivity(altaPedido);
+                return true;
+/*            case R.id.home_añadirItemPedido:
+                Intent añadirItem = new Intent(this, AñadirItemPedidoActivity.class);
+                startActivity(añadirItem);
+                return true;*/
 
             default:
                 // If we got here, the user's action was not recognized.

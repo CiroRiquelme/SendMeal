@@ -6,28 +6,42 @@
 
     <item
         android:id="@+id/home_registrar"
-        android:icon="@drawable/baseline_android_black_18dp"
-        android:title="@string/registrar_registrar"
+        android:icon="@drawable/registrarusuario"
+        android:title="@string/menu_registrar_usuario"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/home_crearItem"
-        android:title="@string/registrar_registrar"
-        android:icon="@drawable/baseline_add_shopping_cart_black_18dp"
+        android:id="@+id/home_crearItemPlato"
+        android:title="@string/menu_alta_platos"
+        android:icon="@drawable/altaplato"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/home_listaItem"
-        android:title="@string/registrar_registrar"
-        android:icon="@drawable/baseline_account_circle_black_18dp"
+        android:title="@string/menu_lista_plato"
+        android:icon="@drawable/listaplatos"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/home_buscarItem"
-        android:title="BuscarItem"
+        android:title="@string/menu_busqueda_plato"
         android:icon="@drawable/busqueda"
         app:showAsAction="ifRoom"
 
+        />
+
+    <item
+        android:id="@+id/home_altaItemPedido"
+        android:title="@string/menu_alta_pedido"
+        android:icon="@drawable/altapedido"
+        app:showAsAction="ifRoom"
+
+        />
+
+    <item
+        android:id="@+id/home_añadirItemPedido"
+        android:title="@string/menu_añadir_item_pedido"
+        app:showAsAction="ifRoom"
         />
 
 

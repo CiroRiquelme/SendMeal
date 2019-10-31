@@ -142,8 +142,10 @@ public class AltaPlatosActivity extends AppCompatActivity {
 
                     Snackbar.make(btnGuardar, "Plato creado con exito",Snackbar.LENGTH_LONG).show();
 
-                    Intent listaPlatos = new Intent(AltaPlatosActivity.this, ListaPlatosActivity.class);
-                    startActivity(listaPlatos);
+                    limpiarCampos();
+
+/*                    Intent listaPlatos = new Intent(AltaPlatosActivity.this, ListaPlatosActivity.class);
+                    startActivity(listaPlatos);*/
                 }
             }
         }
@@ -235,5 +237,14 @@ public class AltaPlatosActivity extends AppCompatActivity {
 
         pcalorias = Integer.valueOf(calorias);
         return true;
+    }
+
+    private void limpiarCampos(){
+        etId.setText("");
+        etNombre.setText("");
+        etDescripcion.setText("");
+        etPrecio.setText("");
+        etCalorias.setText("");
+
     }
 }

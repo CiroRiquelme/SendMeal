@@ -5,6 +5,13 @@
     <!--Home -->
     <string name="msj_bienvenida">Bienvenido!</string>
 
+    <string name="menu_registrar_usuario">Registrar Usuario</string>
+    <string name="menu_alta_platos">Alta plato</string>
+    <string name="menu_alta_pedido">Alta pedido</string>
+    <string name="menu_busqueda_plato">Busqueda plato</string>
+    <string name="menu_lista_plato">Lista Plato</string>
+    <string name="menu_añadir_item_pedido">Añadir item </string>
+
 
     <!--Pantalla de Registro -->
     <string name="registro_titulo">Registrar Usuario</string>
@@ -67,5 +74,17 @@
     <string name="precio_plato_max">Precio Maximo</string>
     <string name="precio_plato_min">Precio Minimo</string>
     <string name="button_cancel_busqueda">CANCELAR</string>
+    <string name="title_activity_alta_pedido">AltaPedidoActivity</string>
+
+
+    <string name="pedido_latitud">Latitud</string>
+    <string name="pedido_longitud">Longitud</string>
+    <string name="pedido_estado">Estado</string>
+    <string name="button_pedido_crear">CREAR</string>
+    <string name="button_pedido_enviar">ENVIAR</string>
+
+
+    <string name="cantidad_plato">Cantidad</string>
+
 
 </resources>

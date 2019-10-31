@@ -13,12 +13,13 @@ import android.os.Message;
 import android.view.View;
 
 import com.example.sendmeal.Utilidades.PlatosRecyclerAdapter;
+import com.example.sendmeal.Utilidades.PlatosRecyclerAdapter2;
 import com.example.sendmeal.dao.PlatoRepository;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class BusquedaDePlatosActivity extends AppCompatActivity {
+public class AñadirItemPedidoActivity extends AppCompatActivity {
 
     TextInputEditText etNombre;
     TextInputEditText etPrecioMin;
@@ -34,7 +35,7 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_busqueda_de_platos);
+  /*      setContentView(R.layout.activity_busqueda_de_platos);
 
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarBack);
@@ -44,8 +45,8 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-/*            getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-            getSupportActionBar().setDisplayUseLogoEnabled(true);*/
+*//*            getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+            getSupportActionBar().setDisplayUseLogoEnabled(true);*//*
         }
 
         etNombre = findViewById(R.id.etPlatoNombreBuscar);
@@ -66,8 +67,8 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         PlatoRepository.getInstance().listarPlato(miHandler);
-        mAdapter = new PlatosRecyclerAdapter(PlatoRepository.getInstance().getListaPlatos());
-        mRecyclerView.setAdapter(mAdapter);
+        mAdapter = new PlatosRecyclerAdapter2(PlatoRepository.getInstance().getListaPlatos());
+        mRecyclerView.setAdapter(mAdapter);*/
     }
 
     private MaterialButton.OnClickListener btnCancelarListener = new View.OnClickListener() {
@@ -124,3 +125,4 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
         }
     };
 }
+

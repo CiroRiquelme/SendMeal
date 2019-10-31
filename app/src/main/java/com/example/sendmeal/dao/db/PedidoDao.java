@@ -28,4 +28,7 @@ public interface PedidoDao {
     @Update
     void actualizar(Pedido pedido);
 
+    @Query("SELECT * FROM pedido WHERE id_pedido=:idPedido")
+    Pedido getById(Integer idPedido);
+
 }

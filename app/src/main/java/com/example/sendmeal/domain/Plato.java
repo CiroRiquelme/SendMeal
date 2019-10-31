@@ -1,16 +1,20 @@
 package com.example.sendmeal.domain;
 
+import androidx.room.ColumnInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Plato {
 
+    @ColumnInfo(name ="id_plato")
     private Integer id;
     private String titulo;
     private String descripcion;
     private Double precio;
     private Integer calorias;
+
 
 
     @Override
