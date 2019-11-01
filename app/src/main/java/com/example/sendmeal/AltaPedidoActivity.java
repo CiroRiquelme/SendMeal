@@ -22,6 +22,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.sendmeal.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -42,6 +43,8 @@ public class AltaPedidoActivity extends AppCompatActivity {
     MaterialButton btnCrear;
     MaterialButton btnEnviar;
     MaterialButton btnAgregar;
+    Button btnUbicacion;
+
     List<ItemsPedido> itemsPedidos = new ArrayList<>();
 
     Double lat;
@@ -64,20 +67,35 @@ public class AltaPedidoActivity extends AppCompatActivity {
 
         etLat = findViewById(R.id.etPedidoLat);
         etLng = findViewById(R.id.etPedidoLng);
+/*        etLat.setEnabled(false);
+        etLng.setEnabled(false);*/
 
         btnCrear = findViewById(R.id.btnCrearPedido);
         btnEnviar = findViewById(R.id.btnEnvarPedido);
         btnAgregar = findViewById(R.id.buttonAgregarItem);
+
+        btnUbicacion = findViewById(R.id.btnUbicacion);
+        btnUbicacion.setOnClickListener(btnUbicacionListener);
 
 
         btnCrear.setOnClickListener(btnCrearPedido);
         btnEnviar.setOnClickListener(btnEnviarPedido);
         btnAgregar.setOnClickListener(btnAgregarListener);
 
+
         btnEnviar.setEnabled(false);
 
 
     }
+
+    Button.OnClickListener btnUbicacionListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent abrirMapa = new Intent(AltaPedidoActivity.this, MapsActivity.class);
+            startActivityForResult(abrirMapa,2);
+
+        }
+    };
 
     MaterialButton.OnClickListener btnAgregarListener = new View.OnClickListener() {
         @Override
@@ -89,7 +107,28 @@ public class AltaPedidoActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        Log.d("RESULT","onActivityResult : " +requestCode + " " + resultCode);
+        if (requestCode == 2) {
+            // Make sure the request was successful
+            if (resultCode == 2) {
+                Log.d("RESULT","OK");
+                // The user picked a contact.
+                // The Intent's data Uri identifies which contact was selected.
 
+                // Do something with the contact here (bigger example below)
+                Double lat =data.getExtras().getDouble("LAT");
+                Double lng = data.getExtras().getDouble("LNG");
+
+                etLat.setText(lat.toString());
+                etLng.setText(lng.toString());
+
+
+
+
+
+            }
+        }
     }
 
 

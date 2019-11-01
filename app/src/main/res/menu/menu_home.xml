@@ -44,5 +44,11 @@
         app:showAsAction="ifRoom"
         />
 
+    <item
+        android:id="@+id/home_abrirMapa"
+        android:title="@string/menu_abrir_mapa"
+        app:showAsAction="ifRoom"
+        />
+
 
 </menu>

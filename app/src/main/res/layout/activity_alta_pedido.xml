@@ -45,20 +45,17 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/btnUbicacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/seleccionar_ubicacion" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tvPedidoEstado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPedidoEstado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/pedido_estado"
-                android:inputType="number|numberDecimal" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_margin="6dp"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relativeLayout"

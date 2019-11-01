@@ -82,6 +82,10 @@ public class HomeActivity extends AppCompatActivity {
                 Intent crearItem = new Intent(this, CrearItemPedidoActivity.class);
                 startActivity(crearItem);
                 return true;
+            case R.id.home_abrirMapa:
+                Intent abrirMapa = new Intent(this, MapsActivity.class);
+                startActivity(abrirMapa);
+                return true;
 
             default:
                 // If we got here, the user's action was not recognized.
