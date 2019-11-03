@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.sendmeal" >
+    package="com.example.sendmeal">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true" >
+        android:usesCleartextTraffic="true">
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -33,11 +32,12 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".VerPedidosEnMapaActivity"
+            android:label="@string/title_activity_ver_pedidos_en_mapa"></activity>
+        <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" >
-        </activity>
-        <activity android:name=".CrearItemPedidoActivity" >
-        </activity>
+            android:label="@string/title_activity_maps"></activity>
+        <activity android:name=".CrearItemPedidoActivity"></activity>
         <activity
             android:name=".AltaPedidoActivity"
             android:label="@string/title_activity_alta_pedido"
@@ -51,7 +51,7 @@
         <activity
             android:name=".AltaPlatosActivity"
             android:parentActivityName=".HomeActivity" />
-        <activity android:name=".HomeActivity" >
+        <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="estado_pedido">
+        <item>TODOS</item>
+        <item>PENDIENTE</item>
+        <item>ENVIADO</item>
+        <item>ACEPTADO</item>
+        <item>RECHAZADO</item>
+        <item>EN_PREPARACION</item>
+        <item>EN_ENVIO</item>
+        <item>ENTREGADO</item>
+        <item>CANCELADO</item>
+    </string-array>
+</resources>
+

@@ -86,6 +86,10 @@ public class HomeActivity extends AppCompatActivity {
                 Intent abrirMapa = new Intent(this, MapsActivity.class);
                 startActivity(abrirMapa);
                 return true;
+            case R.id.home_verPedidosMap:
+                Intent verPedidosMap = new Intent(this, VerPedidosEnMapaActivity.class);
+                startActivity(verPedidosMap);
+                return true;
 
             default:
                 // If we got here, the user's action was not recognized.

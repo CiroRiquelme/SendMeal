@@ -21,16 +21,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PlatoRepository {
 
 
-    public static String _SERVER = "http://192.168.1.11:5000/";
+    public static String _SERVER = "http://192.168.1.12:5000/";
 //    public static String _SERVER = "http://10.0.2.2:5000/";
+// json-server --watch C:\Users\Ciro1\test-json/lab-dam.json --port 5000 --host 10.0.2.2
     private List<Plato> listaPlatos;
-    private List<Pedido> listaPedidos;
+    private ArrayList<Pedido> listaPedidos;
 
     public static final int _ALTA_PLATO = 1;
     public static final int _UPDATE_PLATO = 2;
     public static final int _BORRADO_PLATO = 3;
     public static final int _CONSULTA_PLATO = 4;
-    public static final int _ERROR_PLATO = 9;
+    public static final int _ERROR_PLATO = 5;
+
+    public static final int _ALTA_PEDIDO = 11;
+    public static final int _UPDATE_PEDIDO = 12;
+    public static final int _BORRADO_PEDIDO = 13;
+    public static final int _CONSULTA_PEDIDO = 14;
+    public static final int _ERROR_PEDIDO = 15;
 
     private static PlatoRepository _INSTANCE;
 
@@ -238,6 +245,35 @@ public class PlatoRepository {
                 h.sendMessage(m);
             }
         });
+    }
+
+    public ArrayList<Pedido> getListaPedidos() {
+        return listaPedidos;
+    }
+
+    public void listarPedidos(final Handler h){
+        Call<List<Pedido>> llamada = this.platoRest.buscarPedidos();
+        llamada.enqueue(new Callback<List<Pedido>>() {
+            @Override
+            public void onResponse(Call<List<Pedido>> call, Response<List<Pedido>> response) {
+                if(response.isSuccessful()){
+                    listaPedidos.clear();
+                    listaPedidos.addAll(response.body());
+                    Message m = new Message();
+                    m.arg1 = _CONSULTA_PEDIDO;
+                    h.sendMessage(m);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Pedido>> call, Throwable t) {
+                Message m = new Message();
+                m.arg1 = _ERROR_PEDIDO;
+                h.sendMessage(m);
+            }
+        });
+
+
     }
 
 

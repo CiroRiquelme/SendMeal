@@ -91,6 +91,8 @@
 
 
     <string name="seleccionar_ubicacion">SELECCIONAR UBICACION</string>
+    <string name="title_activity_ver_pedidos_en_mapa">Map</string>
+    <string name="ver_pedidosMap">Ver ubicacion de pedidos</string>
 
 
 </resources>

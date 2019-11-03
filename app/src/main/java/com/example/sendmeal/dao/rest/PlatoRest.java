@@ -28,7 +28,7 @@ public interface PlatoRest {
     @POST("platos/")
     Call<Plato> crear(@Body Plato plato);
 
-        @GET("platos")
+    @GET("platos")
     Call<List<Plato>> buscarPorPrecio(
                 @Query("precio_gte")Integer precioMin, @Query("precio_lte")Integer precioMax);
 
@@ -47,5 +47,8 @@ public interface PlatoRest {
 
     @POST("pedidos/")
     Call<Pedido> crear(@Body Pedido pedido);
+
+    @GET("pedidos/")
+    Call<List<Pedido>> buscarPedidos();
 
 }

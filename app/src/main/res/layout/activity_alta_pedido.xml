@@ -14,6 +14,11 @@
 
         <include layout="@layout/toolbar_back"></include>
 
+        <Spinner
+            android:id="@+id/spinnerEstadoPedido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tvPedidoLat"

@@ -50,5 +50,10 @@
         app:showAsAction="ifRoom"
         />
 
+    <item
+        android:id="@+id/home_verPedidosMap"
+        android:title="@string/ver_pedidosMap"
+        app:showAsAction="ifRoom"
+        />
 
 </menu>

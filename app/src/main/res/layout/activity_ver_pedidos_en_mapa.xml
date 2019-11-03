@@ -4,23 +4,24 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:layout="@layout/activity_ver_pedidos_en_mapa"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnGuardarUbicacion"
+    <Spinner
+        android:id="@+id/spinnerEstadoPedido"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/seleccionar_ubicacion" />
+        android:layout_height="wrap_content" />
 
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:context=".MapsActivity" />
+        tools:context=".VerPedidosEnMapaActivity"
+         />
 
 </LinearLayout>

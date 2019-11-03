@@ -22,7 +22,10 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.example.sendmeal.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -35,7 +38,7 @@ import java.util.List;
 
 public class AltaPedidoActivity extends AppCompatActivity {
 
-    Pedido pedidoActual;
+    Pedido pedidoActual = new Pedido();
 
     TextInputEditText etLat;
     TextInputEditText etLng;
@@ -50,6 +53,8 @@ public class AltaPedidoActivity extends AppCompatActivity {
     Double lat;
     Double lng;
     Date fecha;
+
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +90,31 @@ public class AltaPedidoActivity extends AppCompatActivity {
 
         btnEnviar.setEnabled(false);
 
+        spinner =  findViewById(R.id.spinnerEstadoPedido);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.estado_pedido, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(spinnerListener);
+
 
     }
+    private AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            String estadoSeleccionado = adapterView.getItemAtPosition(i).toString();
+            Log.d("ESTADO PEDIDO :" , estadoSeleccionado);
+            if(!estadoSeleccionado.equals("TODOS")){
+                pedidoActual.setEstado(EstadoPedido.valueOf(estadoSeleccionado));
+            }
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+    };
 
     Button.OnClickListener btnUbicacionListener = new View.OnClickListener() {
         @Override
@@ -144,7 +172,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
 
             pedidoActual.setLat(lat);
             pedidoActual.setLng(lng);
-            pedidoActual.setEstado(EstadoPedido.PENDIENTE);
+            //pedidoActual.setEstado(EstadoPedido.PENDIENTE);
 
             GuardarPedido tareaGuardarPedido = new GuardarPedido();
             tareaGuardarPedido.execute(pedidoActual);
@@ -159,7 +187,8 @@ public class AltaPedidoActivity extends AppCompatActivity {
     private MaterialButton.OnClickListener btnEnviarPedido = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            pedidoActual.setEstado(EstadoPedido.ENVIADO);
+
+            //pedidoActual.setEstado(EstadoPedido.ENVIADO);
             PlatoRepository.getInstance().crearPedido(pedidoActual,miHandler);
             Snackbar.make(btnEnviar, " Pedido Enviado al servidor",Snackbar.LENGTH_LONG).show();
         }
@@ -201,7 +230,7 @@ public class AltaPedidoActivity extends AppCompatActivity {
     Handler miHandler = new Handler(Looper.myLooper()){
         @Override
         public void handleMessage(Message msg) {
-            Log.d("Alta Plato ","Vuelve al handler"+msg.arg1);
+            Log.d("ALTA PEDIDO ","Vuelve al handler"+msg.arg1);
 
             switch (msg.arg1 ){
                 case PlatoRepository._ALTA_PLATO: {
