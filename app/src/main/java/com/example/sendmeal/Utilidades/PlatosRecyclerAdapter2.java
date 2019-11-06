@@ -43,18 +43,7 @@ public class PlatosRecyclerAdapter2 extends RecyclerView.Adapter<PlatosRecyclerA
 
     Context contextActividad;
 
-
-    public   List<ItemsPedido> items = new ArrayList<>();
-
-
-
-    private SparseBooleanArray seleccionados;
-
     private List<Plato> mDataset;
-
-    public List<Plato> getmDataset() {
-        return mDataset;
-    }
 
     public PlatosRecyclerAdapter2 (List<Plato> myDataset) {
         this.mDataset= myDataset;
@@ -71,19 +60,6 @@ public class PlatosRecyclerAdapter2 extends RecyclerView.Adapter<PlatosRecyclerA
         return vh;
     }
 
-    /**Devuelve aquellos objetos marcados.*/
-    public LinkedList<Plato> obtenerSeleccionados(){
-        LinkedList<Plato> marcados = new LinkedList<>();
-        for (int i = 0; i < mDataset.size(); i++) {
-            if (seleccionados.get(i)){
-                marcados.add(mDataset.get(i));
-            }
-        }
-        return marcados;
-    }
-
-
-
     @Override
     public void onBindViewHolder(@NonNull final PlatosRecyclerAdapter2.PlatoViewHolder holder, final int position) {
 
@@ -99,26 +75,22 @@ public class PlatosRecyclerAdapter2 extends RecyclerView.Adapter<PlatosRecyclerA
 
         // asignar eventos a los botones.
 
-        Button.OnClickListener btnAñadirListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Button.OnClickListener btnAñadirListener = v -> {
 
-                holder.btnAñadir.setEnabled(false);
-                holder.btnQuitar.setEnabled(true);
+            holder.btnAñadir.setEnabled(false);
+            holder.btnQuitar.setEnabled(true);
 
-                Plato p = PlatoRepository.getInstance().getListaPlatos().get(position);
+            Plato p = PlatoRepository.getInstance().getListaPlatos().get(position);
 
-                ItemsPedido itemsPedido = new ItemsPedido();
-                itemsPedido.setCantidad(Integer.valueOf(holder.tvCantidadPlato.getText().toString()));
-                itemsPedido.setPlatoPedido(p);
-                Double precio = itemsPedido.getCantidad() * p.getPrecio();
-                itemsPedido.setPrecioPedido(precio);
+            ItemsPedido itemsPedido = new ItemsPedido();
+            itemsPedido.setCantidad(Integer.valueOf(holder.tvCantidadPlato.getText().toString()));
+            itemsPedido.setPlatoPedido(p);
+            Double precio = itemsPedido.getCantidad() * p.getPrecio();
+            itemsPedido.setPrecioPedido(precio);
 
-                items.add(itemsPedido);
+            PlatoRepository.getInstance().addItems(itemsPedido);
 
-                (   (CrearItemPedidoActivity)contextActividad).addItem(itemsPedido);
 
-            }
         };
 
         Button.OnClickListener btnQuitarListener = new View.OnClickListener() {
@@ -133,8 +105,6 @@ public class PlatosRecyclerAdapter2 extends RecyclerView.Adapter<PlatosRecyclerA
          SeekBar.OnSeekBarChangeListener regCantidadListener = new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-
-
                     //  creditoInicial.setText(String.valueOf(regCredito.getProgress()));
                     holder.tvCantidadPlato.setText(String.valueOf(progress));
 
@@ -203,15 +173,6 @@ public class PlatosRecyclerAdapter2 extends RecyclerView.Adapter<PlatosRecyclerA
             btnAñadir = itemView.findViewById(R.id.buttonAñadir);
             btnQuitar = itemView.findViewById(R.id.buttonQuitar);
         }
-
-
-
-
-
-
     }
 
-    public List<ItemsPedido> getItems() {
-        return items;
-    }
 }

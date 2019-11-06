@@ -10,23 +10,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.sendmeal.Utilidades.PlatosRecyclerAdapter;
 import com.example.sendmeal.Utilidades.PlatosRecyclerAdapter2;
 import com.example.sendmeal.dao.PlatoRepository;
-import com.example.sendmeal.domain.ItemsPedido;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class CrearItemPedidoActivity extends AppCompatActivity {
 
@@ -34,7 +24,7 @@ public class CrearItemPedidoActivity extends AppCompatActivity {
     TextInputEditText etPrecioMin;
     TextInputEditText etPrecioMax;
 
-    MaterialButton btnGuardar;
+    MaterialButton btnBuscar;
     MaterialButton btnCancelar;
     MaterialButton btnAceptar;
 
@@ -42,7 +32,6 @@ public class CrearItemPedidoActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    List<ItemsPedido> itemsPedidos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +55,10 @@ public class CrearItemPedidoActivity extends AppCompatActivity {
         etPrecioMax = findViewById(R.id.etPlatoPrecioMax);
 
         btnCancelar = findViewById(R.id.btnCancelarBusqueda);
-        btnGuardar = findViewById(R.id.btnBuscar);
+        btnBuscar = findViewById(R.id.btnBuscar);
         btnAceptar = findViewById(R.id.btnAceptar);
 
-        btnGuardar.setOnClickListener(btnGuardarListener);
+        btnBuscar.setOnClickListener(btnBuscarListener);
         btnCancelar.setOnClickListener(btnCancelarListener);
         btnAceptar.setOnClickListener(btnAceptarListener);
 
@@ -89,47 +78,64 @@ public class CrearItemPedidoActivity extends AppCompatActivity {
 
     }
 
-    private MaterialButton.OnClickListener btnCancelarListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    };
+    private MaterialButton.OnClickListener btnCancelarListener = v -> finish();
 
-    MaterialButton.OnClickListener btnGuardarListener = new View.OnClickListener() {
+    MaterialButton.OnClickListener btnBuscarListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             String nombre = etNombre.getText().toString().trim();
             String precioMins = etPrecioMin.getText().toString().trim();
             String precioMaxs = etPrecioMax.getText().toString().trim();
 
-            Integer precioMin=0;
-            Integer precioMax=1000;
+            Integer precioMin;
+            Integer precioMax;
 
-            if(!precioMins.isEmpty()){
-                precioMin = Integer.valueOf(precioMins);
+            if(nombre.isEmpty()){
+                if(precioMins.isEmpty()){
+                    if (precioMaxs.isEmpty()) {
+                        // todos vacios -> todos los platos
+                        PlatoRepository.getInstance().listarPlato(miHandler);
+                    }else{
+                        //Solo por precio maximo.
+                    }
+                }else{
+                    // nombre vacio -> precio minimo
+                    if (precioMaxs.isEmpty()) {
+                        //Solo precio minimo
+                    }else{
+                        // solo precio minimo y precio maximo
+                        precioMin = Integer.valueOf(precioMins);
+                        precioMax = Integer.valueOf(precioMaxs);
+                        PlatoRepository.getInstance().buscarPlatoPorPrecio(precioMin,precioMax,miHandler);
+                    }
+                }
+            }else{
+                // nombre no vacio
+                if(precioMins.isEmpty()){
+
+                    if(precioMaxs.isEmpty()){
+                        //Solo nombre
+                        PlatoRepository.getInstance().buscarPlatoPorNombre(nombre,miHandler);
+                    }else{
+                        // Por nombre y por precio maximo.
+                    }
+                }else{
+                    if(precioMaxs.isEmpty()){
+                        // Por nombre y precio minimo
+                    }else{
+                        // Por nombre , precio minimo y precio maximo.
+                    }
+                }
+
             }
-            if(!precioMaxs.isEmpty()){
-                precioMax = Integer.valueOf(precioMaxs);
-            }
-
-
-
-            // Faltan validaciones para que no salten excepciones.
-            //Faltan validar las distintas posibilidades de busqueda.
-
-//            PlatoRepository.getInstance().listarPlato(miHandler);
-//            PlatoRepository.getInstance().buscarPlatoPorNombre(nombre,miHandler);
-            PlatoRepository.getInstance().buscarPlatoPorPrecio(precioMin,precioMax,miHandler);
-
         }
     };
 
     MaterialButton.OnClickListener btnAceptarListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
-
+            setResult(10);
+            finish();
         }
     };
 
@@ -139,7 +145,7 @@ public class CrearItemPedidoActivity extends AppCompatActivity {
             switch (msg.arg1 ){
                 case PlatoRepository._CONSULTA_PLATO: {
                     mAdapter.notifyDataSetChanged();
-                    Snackbar.make(btnGuardar, "En el h " +itemsPedidos.size()+" " + + PlatoRepository.getInstance().getListaPlatos().size(),Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(btnBuscar, "En el h " +" " + + PlatoRepository.getInstance().getListaPlatos().size(),Snackbar.LENGTH_LONG).show();
                     break;
                 }
                 case PlatoRepository._UPDATE_PLATO: {
@@ -150,9 +156,7 @@ public class CrearItemPedidoActivity extends AppCompatActivity {
         }
     };
 
-    public void addItem(ItemsPedido ip){
-        itemsPedidos.add(ip);
-    }
+
 
 
 }

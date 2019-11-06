@@ -116,21 +116,15 @@ public class AltaPedidoActivity extends AppCompatActivity {
         }
     };
 
-    Button.OnClickListener btnUbicacionListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent abrirMapa = new Intent(AltaPedidoActivity.this, MapsActivity.class);
-            startActivityForResult(abrirMapa,2);
+    Button.OnClickListener btnUbicacionListener = view -> {
+        Intent abrirMapa = new Intent(AltaPedidoActivity.this, MapsActivity.class);
+        startActivityForResult(abrirMapa,2);
 
-        }
     };
 
-    MaterialButton.OnClickListener btnAgregarListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent crearItem = new Intent(AltaPedidoActivity.this, CrearItemPedidoActivity.class);
-            startActivityForResult(crearItem,1);
-        }
+    MaterialButton.OnClickListener btnAgregarListener = view -> {
+        Intent crearItem = new Intent(AltaPedidoActivity.this, CrearItemPedidoActivity.class);
+        startActivityForResult(crearItem,1);
     };
 
     @Override
@@ -150,12 +144,10 @@ public class AltaPedidoActivity extends AppCompatActivity {
 
                 etLat.setText(lat.toString());
                 etLng.setText(lng.toString());
-
-
-
-
-
             }
+        }
+        if (resultCode==10){
+            pedidoActual.setItems(PlatoRepository.getInstance().getListaItems());
         }
     }
 

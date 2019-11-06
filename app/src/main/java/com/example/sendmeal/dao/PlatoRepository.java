@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.sendmeal.HomeActivity;
 import com.example.sendmeal.dao.rest.PlatoRest;
+import com.example.sendmeal.domain.ItemsPedido;
 import com.example.sendmeal.domain.Pedido;
 import com.example.sendmeal.domain.Plato;
 
@@ -21,11 +22,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PlatoRepository {
 
 
-    public static String _SERVER = "http://192.168.1.12:5000/";
+    public static String _SERVER = "http://192.168.1.11:5000/";
 //    public static String _SERVER = "http://10.0.2.2:5000/";
 // json-server --watch C:\Users\Ciro1\test-json/lab-dam.json --port 5000 --host 10.0.2.2
     private List<Plato> listaPlatos;
     private ArrayList<Pedido> listaPedidos;
+    private ArrayList<ItemsPedido> listaItems;
 
     public static final int _ALTA_PLATO = 1;
     public static final int _UPDATE_PLATO = 2;
@@ -49,6 +51,7 @@ public class PlatoRepository {
             _INSTANCE.configurarRetrofit();
             _INSTANCE.listaPlatos = new ArrayList<>();
             _INSTANCE.listaPedidos = new ArrayList<>();
+            _INSTANCE.listaItems = new ArrayList<>();
         }
         return _INSTANCE;
     }
@@ -276,6 +279,17 @@ public class PlatoRepository {
 
     }
 
+    public  void addItems (ItemsPedido ip){
+        listaItems.add(ip);
+    }
+
+    public ArrayList<ItemsPedido> getListaItems() {
+        return listaItems;
+    }
+
+    public void setListaItems(ArrayList<ItemsPedido> listaItems) {
+        this.listaItems = listaItems;
+    }
 
     public List<Plato> getListaPlatos() {
         return listaPlatos;

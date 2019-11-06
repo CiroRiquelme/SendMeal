@@ -5,12 +5,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.sendmeal.Utilidades.PlatosRecyclerAdapter;
 import com.example.sendmeal.dao.PlatoRepository;
@@ -24,7 +24,7 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
     TextInputEditText etPrecioMin;
     TextInputEditText etPrecioMax;
 
-    MaterialButton btnGuardar;
+    MaterialButton btnBuscar;
     MaterialButton btnCancelar;
 
 
@@ -36,6 +36,10 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busqueda_de_platos);
+        
+        Button btnGuardar = findViewById(R.id.btnAceptar);
+        btnGuardar.setVisibility(View.GONE);
+        
 
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarBack);
@@ -54,10 +58,10 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
         etPrecioMax = findViewById(R.id.etPlatoPrecioMax);
 
         btnCancelar = findViewById(R.id.btnCancelarBusqueda);
-        btnGuardar = findViewById(R.id.btnBuscar);
+        btnBuscar = findViewById(R.id.btnBuscar);
 
 
-        btnGuardar.setOnClickListener(btnGuardarListener);
+        btnBuscar.setOnClickListener(btnBuscarListener);
         btnCancelar.setOnClickListener(btnCancelarListener);
 
 
@@ -80,22 +84,63 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
         }
     };
 
-    MaterialButton.OnClickListener btnGuardarListener = new View.OnClickListener() {
+    MaterialButton.OnClickListener btnBuscarListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             String nombre = etNombre.getText().toString().trim();
             String precioMins = etPrecioMin.getText().toString().trim();
             String precioMaxs = etPrecioMax.getText().toString().trim();
 
-            Integer precioMin=0;
-            Integer precioMax=1000;
+            Integer precioMin;
+            Integer precioMax;
 
-            if(!precioMins.isEmpty()){
+            if(nombre.isEmpty()){
+                if(precioMins.isEmpty()){
+                    if (precioMaxs.isEmpty()) {
+                        // todos vacios -> todos los platos
+                        PlatoRepository.getInstance().listarPlato(miHandler);
+                    }else{
+                        //Solo por precio maximo.
+                    }
+                }else{
+                    // nombre vacio -> precio minimo
+                    if (precioMaxs.isEmpty()) {
+                        //Solo precio minimo
+                    }else{
+                        // solo precio minimo y precio maximo
+                        precioMin = Integer.valueOf(precioMins);
+                        precioMax = Integer.valueOf(precioMaxs);
+                        PlatoRepository.getInstance().buscarPlatoPorPrecio(precioMin,precioMax,miHandler);
+                    }
+                }
+            }else{
+                // nombre no vacio
+                if(precioMins.isEmpty()){
+
+                    if(precioMaxs.isEmpty()){
+                        //Solo nombre
+                        PlatoRepository.getInstance().buscarPlatoPorNombre(nombre,miHandler);
+                    }else{
+                        // Por nombre y por precio maximo.
+                    }
+                }else{
+                    if(precioMaxs.isEmpty()){
+                        // Por nombre y precio minimo
+                    }else{
+                        // Por nombre , precio minimo y precio maximo.
+                    }
+                }
+
+            }
+
+
+
+/*            if(!precioMins.isEmpty()){
                 precioMin = Integer.valueOf(precioMins);
             }
             if(!precioMaxs.isEmpty()){
                 precioMax = Integer.valueOf(precioMaxs);
-            }
+            }*/
         MaterialButton.OnClickListener btnAceptarListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +155,7 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
 
 //            PlatoRepository.getInstance().listarPlato(miHandler);
 //            PlatoRepository.getInstance().buscarPlatoPorNombre(nombre,miHandler);
-            PlatoRepository.getInstance().buscarPlatoPorPrecio(precioMin,precioMax,miHandler);
+          //  PlatoRepository.getInstance().buscarPlatoPorPrecio(precioMin,precioMax,miHandler);
 
 
         }
@@ -122,7 +167,7 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
             switch (msg.arg1 ){
                 case PlatoRepository._CONSULTA_PLATO: {
                     mAdapter.notifyDataSetChanged();
-                    Snackbar.make(btnGuardar, "En el h " + PlatoRepository.getInstance().getListaPlatos().size(),Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(btnBuscar, "En el h " + PlatoRepository.getInstance().getListaPlatos().size(),Snackbar.LENGTH_LONG).show();
                     break;
                 }
                 case PlatoRepository._UPDATE_PLATO: {
