@@ -12,7 +12,7 @@ public class DBClient {
 
     private DBClient(Context ctx){
         pedidosDB = Room.databaseBuilder(ctx,
-                PedidosDB.class, "obrapp-db").allowMainThreadQueries().build();
+                PedidosDB.class, "SendMeal").allowMainThreadQueries().build();
     }
 
     public synchronized static DBClient getInstance(Context ctx){

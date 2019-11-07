@@ -25,6 +25,7 @@ public class PlatoRepository {
     public static String _SERVER = "http://192.168.1.11:5000/";
 //    public static String _SERVER = "http://10.0.2.2:5000/";
 // json-server --watch C:\Users\Ciro1\test-json/lab-dam.json --port 5000 --host 10.0.2.2
+  //  json-server --watch C:\Users\Ciro1\test-json/lab-dam.json --port 5000 --host 192.168.1.11
     private List<Plato> listaPlatos;
     private ArrayList<Pedido> listaPedidos;
     private ArrayList<ItemsPedido> listaItems;

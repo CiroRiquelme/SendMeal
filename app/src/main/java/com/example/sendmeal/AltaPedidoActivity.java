@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.example.sendmeal.dao.PlatoRepository;
 import com.example.sendmeal.dao.db.DBClient;
+import com.example.sendmeal.dao.db.ItemsPedidoDao;
 import com.example.sendmeal.dao.db.PedidoDao;
 import com.example.sendmeal.domain.EstadoPedido;
 import com.example.sendmeal.domain.ItemsPedido;
@@ -147,7 +148,13 @@ public class AltaPedidoActivity extends AppCompatActivity {
             }
         }
         if (resultCode==10){
-            pedidoActual.setItems(PlatoRepository.getInstance().getListaItems());
+
+            //pedidoActual.setItems(PlatoRepository.getInstance().getListaItems());
+            Integer tam;
+            ItemsPedidoDao itemsPedidoDao = DBClient.getInstance(AltaPedidoActivity.this).getPedidosDB().itemsPedidoDao();
+            tam = itemsPedidoDao.getAll().size();
+            Log.d("PEDIDO", "Tamanio lista items : " + tam);
+
         }
     }
 

@@ -7,7 +7,7 @@ import com.example.sendmeal.domain.ItemsPedido;
 import com.example.sendmeal.domain.Pedido;
 
 
-@Database(entities = {Pedido.class, ItemsPedido.class}, version = 1)
+@Database(entities = {Pedido.class, ItemsPedido.class}, version = 2)
 public abstract class PedidosDB extends RoomDatabase {
 
     public abstract PedidoDao pedidoDao();

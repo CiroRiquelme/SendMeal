@@ -6,17 +6,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 
 import com.example.sendmeal.Utilidades.PlatosRecyclerAdapter2;
 import com.example.sendmeal.dao.PlatoRepository;
+import com.example.sendmeal.dao.db.DBClient;
+import com.example.sendmeal.dao.db.ItemsPedidoDao;
+import com.example.sendmeal.dao.db.PedidoDao;
+import com.example.sendmeal.domain.ItemsPedido;
+import com.example.sendmeal.domain.Pedido;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CrearItemPedidoActivity extends AppCompatActivity {
 
@@ -31,6 +41,8 @@ public class CrearItemPedidoActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private static ArrayList<ItemsPedido> listaItemsPedido = new ArrayList<>();
 
 
     @Override
@@ -134,8 +146,12 @@ public class CrearItemPedidoActivity extends AppCompatActivity {
     MaterialButton.OnClickListener btnAceptarListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            setResult(10);
-            finish();
+            listaItemsPedido =PlatosRecyclerAdapter2.getListaItemsPedido();
+            GuardarItemsPedido guardarItemsPedido = new GuardarItemsPedido();
+            guardarItemsPedido.execute(listaItemsPedido);
+
+/*            setResult(10);
+            finish();*/
         }
     };
 
@@ -155,6 +171,36 @@ public class CrearItemPedidoActivity extends AppCompatActivity {
             }
         }
     };
+
+
+    class GuardarItemsPedido extends AsyncTask<List<ItemsPedido>, Void, Void> {
+
+        @Override
+        protected Void doInBackground(List<ItemsPedido>... listaItems) {
+
+            ItemsPedidoDao itemsPedidoDao = DBClient.getInstance(CrearItemPedidoActivity.this).getPedidosDB().itemsPedidoDao();
+            PedidoDao pedidoDao = DBClient.getInstance(CrearItemPedidoActivity.this).getPedidosDB().pedidoDao();
+            List<Pedido> pedidos = pedidoDao.getAll();
+            Integer id = pedidos.size();
+
+            for (ItemsPedido i : listaItems[0]){
+                i.setIdPedido(id);
+            }
+            itemsPedidoDao.insertAllList(listaItems[0]);
+            return  null;
+        }
+
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Log.d("ITEM","Se creo el item");
+            PlatosRecyclerAdapter2.getListaItemsPedido().clear();
+            setResult(10);
+            finish();
+
+        }
+    }
 
 
 
