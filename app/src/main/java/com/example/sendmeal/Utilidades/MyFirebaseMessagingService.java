@@ -53,6 +53,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
 
+
+
     /**
      * Called when message is received.
      *
@@ -61,6 +63,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+
+        if(remoteMessage.getMessageId().equals("404")){
+            Log.d("TAG", "LPM");
+        }
         // [START_EXCLUDE]
         // There are two types of messages data messages and notification messages. Data messages
         // are handled
@@ -102,6 +108,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
+
+        sendNotification("Lalala");
     }
     // [END receive_message]
 
@@ -140,7 +148,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private String getTokenFromPrefs(){
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyFirebaseMessagingService.this);
         return  preferences.getString("registration_id", null);
     }
 

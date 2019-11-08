@@ -1,35 +1,49 @@
 package com.example.sendmeal;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.example.sendmeal.Utilidades.MyFirebaseMessagingService;
 import com.example.sendmeal.dao.PlatoRepository;
 import com.example.sendmeal.dao.db.DBClient;
 import com.example.sendmeal.dao.db.PedidoDao;
 import com.example.sendmeal.domain.EstadoPedido;
 import com.example.sendmeal.domain.ItemsPedido;
 import com.example.sendmeal.domain.Pedido;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Handler;
 import android.os.Looper;
+
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.sendmeal.R;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
+import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -38,6 +52,7 @@ import java.util.List;
 
 public class AltaPedidoActivity extends AppCompatActivity {
 
+    private static final String TAG ="ALTA_PEDIDOS" ;
     Pedido pedidoActual = new Pedido();
 
     TextInputEditText etLat;
@@ -166,10 +181,36 @@ public class AltaPedidoActivity extends AppCompatActivity {
             pedidoActual.setLng(lng);
             //pedidoActual.setEstado(EstadoPedido.PENDIENTE);
 
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(AltaPedidoActivity.this);
+            String token = preferences.getString("registration_id", null);
+
+            FirebaseInstanceId.getInstance().getInstanceId()
+                    .addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token1 = task.getResult().getToken();
+
+                        pedidoActual.setTokenPush(token1);
+                        Log.d("TOKEN ", ": "+token1);
+
+                        // Log and toast
+                        String msg = getString(R.string.msg_token_fmt, token1);
+                        Log.d(TAG, msg);
+                        Toast.makeText(AltaPedidoActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    });
+
+
+
             GuardarPedido tareaGuardarPedido = new GuardarPedido();
             tareaGuardarPedido.execute(pedidoActual);
 
             bloquearCampos();
+
+
 
 
 
@@ -180,8 +221,22 @@ public class AltaPedidoActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
 
+/*            // This registration token comes from the client FCM SDKs.
+            String registrationToken = pedidoActual.getTokenPush();
+
+
+            FirebaseMessaging.getInstance().send(new RemoteMessage.Builder(registrationToken)
+                    .addData("score", "850")
+                    .addData("time", "2:45")
+                    .setMessageId("404")
+                    .build());*/
+
+
+
+
             //pedidoActual.setEstado(EstadoPedido.ENVIADO);
             PlatoRepository.getInstance().crearPedido(pedidoActual,miHandler);
+
             Snackbar.make(btnEnviar, " Pedido Enviado al servidor",Snackbar.LENGTH_LONG).show();
         }
     };

@@ -12,6 +12,7 @@ import com.example.sendmeal.dao.db.DBClient;
 import com.example.sendmeal.dao.db.PedidoDao;
 import com.example.sendmeal.domain.Pedido;
 import com.example.sendmeal.domain.Plato;
+import com.google.firebase.FirebaseApp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,8 @@ public class HomeActivity extends AppCompatActivity {
 /*        PedidoDao daoPedido= DBClient.getInstance(this).getPedidosDB().pedidoDao();
         Pedido p1 = new Pedido(1,10.0,10.0);
         daoPedido.insert(p1);*/
+
+
 
 
 

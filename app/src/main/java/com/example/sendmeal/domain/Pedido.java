@@ -27,8 +27,20 @@ public class Pedido {
     private Date fechaCreacion = new Date();
     private EstadoPedido estado ;
 
+    private String tokenPush;
+
     @Ignore
     private List<ItemsPedido> items = new ArrayList<>();
+
+
+
+    public String getTokenPush() {
+        return tokenPush;
+    }
+
+    public void setTokenPush(String tokenPush) {
+        this.tokenPush = tokenPush;
+    }
 
     @Ignore
     public Pedido() {
