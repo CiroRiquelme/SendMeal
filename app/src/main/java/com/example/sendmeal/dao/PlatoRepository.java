@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PlatoRepository {
 
 
-    public static String _SERVER = "http://192.168.1.11:5000/";
+    public static String _SERVER = "http://192.168.1.16:5000/";
 //    public static String _SERVER = "http://10.0.2.2:5000/";
 // json-server --watch C:\Users\Ciro1\test-json/lab-dam.json --port 5000 --host 10.0.2.2
     private List<Plato> listaPlatos;

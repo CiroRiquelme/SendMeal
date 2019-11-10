@@ -14,6 +14,7 @@ public class Plato {
     private String descripcion;
     private Double precio;
     private Integer calorias;
+    private String imagenPath;
 
 
 
@@ -46,6 +47,14 @@ public class Plato {
         this.descripcion = descripcion;
         this.precio = precio;
         this.calorias = calorias;
+    }
+
+    public String getImagenPath() {
+        return imagenPath;
+    }
+
+    public void setImagenPath(String imagenPath) {
+        this.imagenPath = imagenPath;
     }
 
     public Integer getId() {

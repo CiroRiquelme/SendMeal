@@ -6,7 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 
 
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +30,8 @@ import com.example.sendmeal.dao.PlatoRepository;
 import com.example.sendmeal.domain.Plato;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -66,8 +72,28 @@ public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAd
     public void onBindViewHolder(@NonNull final PlatosRecyclerAdapter.PlatoViewHolder holder, final int position) {
 
         final Plato plato = mDataset.get(position);
+        if(plato.getImagenPath()!=null){
+            if(plato.getImagenPath().equals(AltaPlatosActivity.NO_IMAGEN)){
+                holder.imagenPlato.setImageResource(R.drawable.hamburguesa);
+            }else{
 
-        holder.imagenPlato.setImageResource(R.drawable.hamburguesa);
+                File file = new File(plato.getImagenPath());
+                Bitmap imageBitmap = null;
+                try {
+                    imageBitmap = MediaStore.Images.Media
+                            .getBitmap(contextActividad.getContentResolver(), Uri.fromFile(file));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (imageBitmap != null) {
+                    holder.imagenPlato.setImageBitmap(imageBitmap);
+                }
+            }
+        }
+
+
+
         holder.tvnombrePlato.setText(plato.getTitulo());
         holder.tvprecioPlato.setText(plato.getPrecio().toString());
         holder.tvdescripcionPlato.setText(plato.getDescripcion());

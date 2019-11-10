@@ -9,11 +9,10 @@
     tools:context=".AltaPlatosActivity">
 
 
-
     <LinearLayout
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="vertical">
@@ -22,72 +21,65 @@
         <include layout="@layout/toolbar_back"></include>
 
 
-        <ImageView
-            android:id="@+id/imageView"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvPlatoId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/altaplato" />
+            android:layout_margin="6dp"
+            android:hint="@string/alta_plato_id">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPlatoId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                app:errorEnabled="true" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tvPlatoId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:hint="@string/alta_plato_id">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPlatoId"
+            android:id="@+id/tvPlatoNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            app:errorEnabled="true"
-            />
+            android:layout_margin="6dp">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPlatoNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/alta_plato_nombre"
+                android:inputType="none|textPersonName" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tvPlatoNombre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPlatoNombre"
+            android:id="@+id/tvPlatoDescripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/alta_plato_nombre"
-            android:inputType="none|textPersonName" />
+            android:layout_margin="6dp"
+            android:hint="@string/alta_plato_descripcion">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPlatoDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tvPlatoDescripcion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:hint="@string/alta_plato_descripcion">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPlatoDescripcion"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvPlatoPrecio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_margin="6dp"
+            android:hint="@string/alta_plato_precio">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tvPlatoPrecio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:hint="@string/alta_plato_precio">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPlatoPrecio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPlatoPrecio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tvPlatoCalorias"
@@ -104,30 +96,30 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCancelar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_cancel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnPlatoGuardar"
-            style="@style/AppTheme"
-            app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancelar"
+                style="@style/AppTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_cancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnPlatoGuardar"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPlatoGuardar"
-            style="@style/AppTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_guardar"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPlatoGuardar"
+                style="@style/AppTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_guardar"
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btnCancelar" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnCancelar" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAgregarImagen"
@@ -142,5 +134,11 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/altaplato" />
+
+    </LinearLayout>
     </ScrollView>
