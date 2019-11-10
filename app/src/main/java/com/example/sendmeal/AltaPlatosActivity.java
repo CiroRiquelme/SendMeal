@@ -1,15 +1,26 @@
 package com.example.sendmeal;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.sendmeal.dao.PlatoRepository;
@@ -30,6 +41,8 @@ public class AltaPlatosActivity extends AppCompatActivity {
 
     MaterialButton btnGuardar;
     MaterialButton btnCancelar;
+    MaterialButton btnAgregarImagen;
+    ImageView imageView;
 
     Integer pid;
     String ptitulo;
@@ -39,7 +52,8 @@ public class AltaPlatosActivity extends AppCompatActivity {
 
     private Plato platoActual;
 
-
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_CAMERA_PERMISSION = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +88,9 @@ public class AltaPlatosActivity extends AppCompatActivity {
         btnCancelar = findViewById(R.id.btnCancelar);
         btnCancelar.setOnClickListener(btnCancelarListener);
 
-
-
-
+        btnAgregarImagen = findViewById(R.id.btnAgregarImagen);
+        btnAgregarImagen.setOnClickListener(btnAgregarImagenListener);
+        imageView = findViewById(R.id.imageView);
 
         if(getIntent().getExtras()!= null){
             if(getIntent().getAction()=="EDITAR"){
@@ -112,6 +126,71 @@ public class AltaPlatosActivity extends AppCompatActivity {
                     etCalorias.setText(platoActual.getCalorias().toString());
                 }
             }
+        }
+    }
+
+    private MaterialButton.OnClickListener btnAgregarImagenListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (ContextCompat.checkSelfPermission(AltaPlatosActivity.this, Manifest.permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestCameraPermission();
+                return;
+            }
+            dispatchTakePictureIntent();
+        }
+    };
+
+    private void requestCameraPermission() {
+        if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(AltaPlatosActivity.this);
+            builder.setTitle(R.string.permisos_titulo)
+                    .setMessage(R.string.permiso_camera)
+                    .setPositiveButton(R.string.confirmir_quitar, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            AltaPlatosActivity.this.requestPermissions(new String[]{Manifest.permission.CAMERA},
+                                    REQUEST_CAMERA_PERMISSION);
+                        }
+                    })
+                    .setNegativeButton(R.string.cancelar_quitar, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Snackbar.make(btnAgregarImagen, "Camera Error",Snackbar.LENGTH_LONG).show();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Snackbar.make(btnAgregarImagen, "Camera Error",Snackbar.LENGTH_LONG).show();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageView.setImageBitmap(imageBitmap);
         }
     }
 

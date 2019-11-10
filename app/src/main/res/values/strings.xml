@@ -52,6 +52,7 @@
     <string name="alta_plato_guardar">Guardar</string>
     <string name="button_guardar">GUARDAR</string>
     <string name="button_cancel">CANCELAR</string>
+    <string name="button_agregar_imagen">IMAGEN</string>
 
 
     <!--Lista de platos -->
@@ -106,6 +107,12 @@
     <string name="msg_subscribe_failed">Failed to subscribe to weather topic</string>
     <string name="fcm_message">FCM Message</string>
     <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+
+
+    <!--LAB 06-->
+    <string name="permisos_titulo">Solicitud de permisos</string>
+    <string name="permiso_camera">Esta funcion requiere permiso de camara</string>
+
 
 
 </resources>
