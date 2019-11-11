@@ -7,6 +7,7 @@ import android.content.Intent;
 
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Handler;
@@ -39,7 +40,7 @@ public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAd
 
     private static final int CODIGO_EDITAR_PLATO = 987;
 
-    Context contextActividad;
+    private Context contextActividad;
 
 
     private List<Plato> mDataset;
@@ -73,12 +74,37 @@ public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAd
 
         final Plato plato = mDataset.get(position);
         if(plato.getImagenPath()!=null){
+
+
             if(plato.getImagenPath().equals(AltaPlatosActivity.NO_IMAGEN)){
                 holder.imagenPlato.setImageResource(R.drawable.hamburguesa);
             }else{
 
+                // Get the dimensions of the View
+                int targetW = 169;
+                int targetH = 187;
+
+                // Get the dimensions of the bitmap
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                bmOptions.inJustDecodeBounds = true;
+
+                int photoW = bmOptions.outWidth;
+                int photoH = bmOptions.outHeight;
+
+                // Determine how much to scale down the image
+                int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+                // Decode the image file into a Bitmap sized to fill the View
+                bmOptions.inJustDecodeBounds = false;
+                bmOptions.inSampleSize = scaleFactor;
+
+
+/*                Bitmap bitmap = BitmapFactory.decodeFile(plato.getImagenPath(), bmOptions);
+                holder.imagenPlato.setImageBitmap(bitmap);*/
+
                 File file = new File(plato.getImagenPath());
-                Bitmap imageBitmap = null;
+                Bitmap imageBitmap = BitmapFactory.decodeFile(plato.getImagenPath(), bmOptions);
+
                 try {
                     imageBitmap = MediaStore.Images.Media
                             .getBitmap(contextActividad.getContentResolver(), Uri.fromFile(file));
@@ -101,76 +127,56 @@ public class PlatosRecyclerAdapter extends RecyclerView.Adapter<PlatosRecyclerAd
 
         // asignar eventos a los botones.
 
-        Button.OnClickListener btnEditarListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Button.OnClickListener btnEditarListener = v -> {
 
 
-                Intent i = new Intent(contextActividad, AltaPlatosActivity.class);
+            Intent i = new Intent(contextActividad, AltaPlatosActivity.class);
+            i.putExtra("indice",position);
+            i.setAction("EDITAR");
+            ((Activity)contextActividad).startActivityForResult(i,CODIGO_EDITAR_PLATO);
+
+        };
+
+        Button.OnClickListener btnQuitarListener = v -> {
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(contextActividad);
+            builder.setTitle(R.string.titulo_dialog_quitar)
+                    .setMessage(R.string.mensaje_dialog_quitar)
+                    .setPositiveButton(R.string.confirmir_quitar, (dialog, which) -> {
+                        Snackbar.make(holder.btnEditar, "Plato eliminado correctamente",Snackbar.LENGTH_SHORT).show();
+
+                        Plato p = PlatoRepository.getInstance().getListaPlatos().get(position);
+                       Handler miHandler = ( (ListaPlatosActivity) contextActividad).getMiHandler();
+                       PlatoRepository.getInstance().borrarPlato(p,miHandler);
+
+                    })
+                    .setNegativeButton(R.string.cancelar_quitar, (dialog, which) -> Snackbar.make(holder.btnEditar, "El plato no ha sido eliminado",Snackbar.LENGTH_SHORT).show());
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        };
+
+        Button.OnClickListener btnOfertaListener = v -> {
+
+            /*Snackbar.make(holder.btnOferta, "El plato "+HomeActivity.LISTA_PLATOS.get(position).getTitulo()+" se encuentra en oferta",Snackbar.LENGTH_SHORT).show();*/
+            //Hilo secundario
+
+            plato.setEnOferta(true);
+
+            Runnable r = () -> {
+                try{
+                    Thread.currentThread().sleep(10000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                Intent i = new Intent();
+                i.setAction(MyReceiver.EVENTO_01);
                 i.putExtra("indice",position);
-                i.setAction("EDITAR");
-                ((Activity)contextActividad).startActivityForResult(i,CODIGO_EDITAR_PLATO);
-
-            }
-        };
-
-        Button.OnClickListener btnQuitarListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(contextActividad);
-                builder.setTitle(R.string.titulo_dialog_quitar)
-                        .setMessage(R.string.mensaje_dialog_quitar)
-                        .setPositiveButton(R.string.confirmir_quitar, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Snackbar.make(holder.btnEditar, "Plato eliminado correctamente",Snackbar.LENGTH_SHORT).show();
-
-                                Plato p = PlatoRepository.getInstance().getListaPlatos().get(position);
-                               Handler miHandler = ( (ListaPlatosActivity) contextActividad).getMiHandler();
-                               PlatoRepository.getInstance().borrarPlato(p,miHandler);
-
-                            }
-                        })
-                        .setNegativeButton(R.string.cancelar_quitar, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Snackbar.make(holder.btnEditar, "El plato no ha sido eliminado",Snackbar.LENGTH_SHORT).show();
-                            }
-                        });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        };
-
-        Button.OnClickListener btnOfertaListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                /*Snackbar.make(holder.btnOferta, "El plato "+HomeActivity.LISTA_PLATOS.get(position).getTitulo()+" se encuentra en oferta",Snackbar.LENGTH_SHORT).show();*/
-                //Hilo secundario
-
-                plato.setEnOferta(true);
-
-                Runnable r = new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            Thread.currentThread().sleep(10000);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        Intent i = new Intent();
-                        i.setAction(MyReceiver.EVENTO_01);
-                        i.putExtra("indice",position);
-                        contextActividad.sendBroadcast(i);
-                    }
-                };
-                Thread t1 = new Thread(r);
-                t1.start();
-            }
+                contextActividad.sendBroadcast(i);
+            };
+            Thread t1 = new Thread(r);
+            t1.start();
         };
 
         holder.btnEditar.setOnClickListener(btnEditarListener);
