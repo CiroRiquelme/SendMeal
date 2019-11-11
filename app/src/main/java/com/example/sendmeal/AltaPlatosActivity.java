@@ -368,7 +368,7 @@ public class AltaPlatosActivity extends AppCompatActivity {
         etDescripcion.setError(null);
         return true;
     }
-    private boolean validarPrecio(){
+    public boolean validarPrecio(){
         String precio = etPrecio.getText().toString().trim();
         if(precio.isEmpty()){
             etPrecio.setError("precio obligatorio");

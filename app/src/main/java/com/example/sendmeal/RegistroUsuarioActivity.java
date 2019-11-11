@@ -263,8 +263,8 @@ public class RegistroUsuarioActivity extends AppCompatActivity   {
         return true;
     }
 
-    private  boolean validarMail(){
-        Context context = getApplicationContext();
+    public   boolean validarMail(){
+
         String mail = regMail.getText().toString().trim();
         regMail.setError(null);
 
@@ -278,6 +278,14 @@ public class RegistroUsuarioActivity extends AppCompatActivity   {
             return false;
         }
         return true;
+    }
+
+    public EditText getRegMail() {
+        return regMail;
+    }
+
+    public void setRegMail(EditText regMail) {
+        this.regMail = regMail;
     }
 
     private boolean validarClave() {
@@ -312,7 +320,7 @@ public class RegistroUsuarioActivity extends AppCompatActivity   {
         return true;
     }
 
-    private boolean validarVencimiento(){
+    public boolean validarVencimiento(){
         Context context = getApplicationContext();
         regVto.setError(null);
 
@@ -341,7 +349,7 @@ public class RegistroUsuarioActivity extends AppCompatActivity   {
         return true;
     }
 
-    private  boolean validarNumeroTarjeta(){
+    public   boolean validarNumeroTarjeta(){
         regNro.setError(null);
         String nroTajeta = regNro.getText().toString().trim();
         if(nroTajeta.isEmpty()){
@@ -349,6 +357,14 @@ public class RegistroUsuarioActivity extends AppCompatActivity   {
             return false;
         }
         return true;
+    }
+
+    public EditText getRegNro() {
+        return regNro;
+    }
+
+    public void setRegNro(EditText regNro) {
+        this.regNro = regNro;
     }
 
     private boolean validarNumeroCCV(){
