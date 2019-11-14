@@ -110,6 +110,7 @@ public class BusquedaDePlatosActivity extends AppCompatActivity {
                         // solo precio minimo y precio maximo
                         precioMin = Integer.valueOf(precioMins);
                         precioMax = Integer.valueOf(precioMaxs);
+
                         PlatoRepository.getInstance().buscarPlatoPorPrecio(precioMin,precioMax,miHandler);
                     }
                 }
